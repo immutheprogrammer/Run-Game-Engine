@@ -5,6 +5,7 @@ import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
+import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL40.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -52,6 +53,12 @@ public class Window {
             throw new IllegalStateException("Failed to create the glfwWindow");
         }
 
+        // Sets the mouse callbacks
+        glfwSetCursorPosCallback(window, MouseListener::mousePositionCallback);
+        glfwSetMouseButtonCallback(window, MouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(window, MouseListener::mouseScrollCallback);
+        glfwSetKeyCallback(window, KeyListener::keyCallback);
+
         // Make the OpenGL context current
         glfwMakeContextCurrent(window);
         // Enable v-sync
@@ -74,6 +81,14 @@ public class Window {
 
         init();
         loop();
+
+        // Free the memory allocated
+        glfwFreeCallbacks(window);
+        glfwDestroyWindow(window);
+
+        // Terminate GLFW and free the error callback
+        glfwTerminate();
+        glfwSetErrorCallback(null).free();
     }
 
     private void loop() {
@@ -85,6 +100,10 @@ public class Window {
             glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
             // Clears the window
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            if (KeyListener.isKeyPressed(GLFW_KEY_SPACE)) {
+                System.out.println("Space key is pressed!");
+            }
 
             glfwSwapBuffers(window);
         }
