@@ -6,6 +6,7 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import run.Input.KeyListener;
 import run.Input.MouseListener;
+import util.Time;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
@@ -13,23 +14,45 @@ import static org.lwjgl.opengl.GL40.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
+
     int width, height;
     String title;
 
-    
+    public float r = 1.0f;
+    public float g = 1.0f;
+    public float b = 1.0f;
+    public float a = 1.0f;
 
     private static Window windowInstance;
     private long window;
 
-    private Window(int width, int height, String title) {
-        this.width = width;
-        this.height = height;
-        this.title = title;
+    private static Scene currentScene;
+
+    private Window() {
+        this.width = 1280;
+        this.height = 720;
+        this.title = "Run Engine Tests";
     }
 
-    public static Window get(int width, int height, String title) {
+    public static void changeScene(int newScene) {
+        switch (newScene) {
+            case 0:
+                currentScene = new LevelEditorScene();
+                currentScene.init();
+                break;
+            case 1:
+                currentScene = new LevelScene();
+                currentScene.init();
+                break;
+            default:
+                assert false : "Unknown Scene " + newScene;
+                break;
+        }
+    }
+
+    public static Window get() {
         if (Window.windowInstance == null) {
-            Window.windowInstance = new Window(width, height, title);
+            Window.windowInstance = new Window();
         }
 
         return Window.windowInstance;
@@ -49,7 +72,6 @@ public class Window {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
-        // Create the window
         window = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
         if (window == NULL) {
             throw new IllegalStateException("Failed to create the glfwWindow");
@@ -63,6 +85,7 @@ public class Window {
 
         // Make the OpenGL context current
         glfwMakeContextCurrent(window);
+
         // Enable v-sync
         glfwSwapInterval(1);
 
@@ -76,6 +99,9 @@ public class Window {
         // bindings available for use.
         GL.createCapabilities();
 
+        glViewport(0, 0, 1280, 720);
+
+        Window.changeScene(0);
     }
 
     public void run() {
@@ -94,20 +120,31 @@ public class Window {
     }
 
     private void loop() {
+        float beginTime = Time.getTime();
+        float endTime = Time.getTime();
+        float dt = -1.0f;
+
         while (!glfwWindowShouldClose(window)) {
             // Poll events
             glfwPollEvents();
 
             // Change the colour of the screen
-            glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+            glClearColor(r, g, b, a);
             // Clears the window
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            if (KeyListener.isKeyPressed(GLFW_KEY_SPACE)) {
-                System.out.println("Space key is pressed!");
+            if (dt >= 0) {
+                currentScene.update(dt);
             }
 
             glfwSwapBuffers(window);
+
+            endTime = Time.getTime();
+            dt = endTime - beginTime;
+            //System.out.println("FPS: " + (int)(1.0f / dt));
+
+
+            beginTime = endTime;
         }
     }
 }

@@ -2,7 +2,7 @@ import run.Window;
 
 public class Main {
     public static void main(String[] args) {
-        Window window = Window.get(1280, 720, "Run Engine Tests");
+        Window window = Window.get();
         window.run();
     }
 }
