@@ -6,8 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL40.*;
-import static org.lwjgl.stb.STBImage.stbi_image_free;
-import static org.lwjgl.stb.STBImage.stbi_load;
+import static org.lwjgl.stb.STBImage.*;
 
 public class Texture {
 
@@ -35,6 +34,8 @@ public class Texture {
         // When shrinking image don't blur
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
+
+        stbi_set_flip_vertically_on_load(true);
         // Load image
         ByteBuffer image = stbi_load(filepath, width, height, channels, 0);
 

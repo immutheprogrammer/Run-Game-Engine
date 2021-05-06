@@ -1,7 +1,9 @@
-package run;
+package run.scenes;
 
 
 import renderer.Renderer;
+import run.Camera;
+import run.GameObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ public abstract class Scene {
     public Scene() {
 
     }
+
 
     public void init() {
 

@@ -4,9 +4,11 @@ package run;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
-import run.Input.KeyListener;
-import run.Input.MouseListener;
-import util.Time;
+import run.input.KeyListener;
+import run.input.MouseListener;
+import run.scenes.LevelEditorScene;
+import run.scenes.LevelScene;
+import run.scenes.Scene;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
@@ -125,8 +127,8 @@ public class Window {
     }
 
     private void loop() {
-        float beginTime = Time.getTime();
-        float endTime = Time.getTime();
+        float beginTime = (float)glfwGetTime();
+        float endTime;
         float dt = -1.0f;
 
         while (!glfwWindowShouldClose(window)) {
@@ -144,7 +146,7 @@ public class Window {
 
             glfwSwapBuffers(window);
 
-            endTime = Time.getTime();
+            endTime = (float)glfwGetTime();
             dt = endTime - beginTime;
 
             beginTime = endTime;
