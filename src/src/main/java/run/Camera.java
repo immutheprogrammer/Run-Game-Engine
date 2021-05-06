@@ -17,7 +17,7 @@ public class Camera {
 
     public void adjustProjection() {
         this.projectionMatrix.identity();
-        this.projectionMatrix.ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f * 21.0f, 0.0f, 100.0f);
+        this.projectionMatrix.ortho(0.0f, 1280.0f, 0.0f, 720.0f, 0.0f, 100.0f);
     }
 
     public Matrix4f getViewMatrix() {

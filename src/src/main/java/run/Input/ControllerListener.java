@@ -25,6 +25,7 @@ public class ControllerListener {
         return 0;
     }
 
+
     public static boolean isButtonDown(int joystick, int button) {
         presentState = glfwJoystickPresent(joystick);
         if (presentState) {

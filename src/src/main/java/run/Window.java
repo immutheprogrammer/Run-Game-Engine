@@ -39,10 +39,12 @@ public class Window {
             case 0:
                 currentScene = new LevelEditorScene();
                 currentScene.init();
+                currentScene.start();
                 break;
             case 1:
                 currentScene = new LevelScene();
                 currentScene.init();
+                currentScene.start();
                 break;
             default:
                 assert false : "Unknown Scene " + newScene;
@@ -56,6 +58,10 @@ public class Window {
         }
 
         return Window.windowInstance;
+    }
+
+    public static Scene getScene() {
+        return get().currentScene;
     }
 
     private void init() {
@@ -99,7 +105,6 @@ public class Window {
         // bindings available for use.
         GL.createCapabilities();
 
-        glViewport(0, 0, 1280, 720);
 
         Window.changeScene(0);
     }
@@ -141,8 +146,6 @@ public class Window {
 
             endTime = Time.getTime();
             dt = endTime - beginTime;
-            //System.out.println("FPS: " + (int)(1.0f / dt));
-
 
             beginTime = endTime;
         }
