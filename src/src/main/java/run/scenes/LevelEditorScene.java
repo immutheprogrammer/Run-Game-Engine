@@ -3,7 +3,9 @@ package run.scenes;
 import components.Sprite;
 import components.SpriteRenderer;
 import components.SpriteSheet;
+import imgui.ImGui;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 import run.Camera;
 import run.GameObject;
 import run.Transform;
@@ -31,17 +33,16 @@ public class LevelEditorScene extends Scene {
 
         spriteSheet = AssetPool.getSpriteSheet("assets/images/spritesheet.png");
 
-        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 1);
-        obj2.addComponent(new SpriteRenderer(new Sprite(
-                AssetPool.getTexture("assets/images/blendImage2.png")
-        )));
-        this.addGameObjectToScene(obj2);
-
         obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100), new Vector2f(256, 256)), -2);
         obj1.addComponent(new SpriteRenderer(new Sprite(
                 AssetPool.getTexture("assets/images/blendImage1.png")
         )));
         this.addGameObjectToScene(obj1);
+
+        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 1);
+        obj2.addComponent(new SpriteRenderer(new Vector4f(1f, 1f, 1f, 0.5f)));
+        this.addGameObjectToScene(obj2);
+        this.activeGameObject = obj2;
 
 
 
@@ -56,9 +57,6 @@ public class LevelEditorScene extends Scene {
                         16, 16, 26, 0));
     }
 
-    private int spriteIndex = 0;
-    private float spriteFlipTime = 0.2f;
-    private float spriteFlipTimeLeft = 0.0f;
     @Override
     public void update(float dt) {
 
@@ -70,5 +68,11 @@ public class LevelEditorScene extends Scene {
         }
 
         this.renderer.render();
+    }
+
+    public void imgui() {
+        ImGui.begin("Test window");
+        ImGui.text("Random Text");
+        ImGui.end();
     }
 }

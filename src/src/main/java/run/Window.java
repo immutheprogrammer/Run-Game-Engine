@@ -4,6 +4,7 @@ package run;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+import run.im_gui.ImGuiLayer;
 import run.input.KeyListener;
 import run.input.MouseListener;
 import run.scenes.LevelEditorScene;
@@ -27,6 +28,7 @@ public class Window {
 
     private static Window windowInstance;
     private long window;
+    private ImGuiLayer imGuiLayer;
 
     private static Scene currentScene;
 
@@ -90,6 +92,10 @@ public class Window {
         glfwSetMouseButtonCallback(window, MouseListener::mouseButtonCallback);
         glfwSetScrollCallback(window, MouseListener::mouseScrollCallback);
         glfwSetKeyCallback(window, KeyListener::keyCallback);
+        glfwSetWindowSizeCallback(window, (w, newWidth, newHeight) -> {
+            Window.setWidth(newWidth);
+            Window.setHeight(newHeight);
+        });
 
         // Make the OpenGL context current
         glfwMakeContextCurrent(window);
@@ -109,6 +115,8 @@ public class Window {
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        this.imGuiLayer = new ImGuiLayer(window);
+        this.imGuiLayer.initImGui();
 
         Window.changeScene(0);
     }
@@ -146,6 +154,7 @@ public class Window {
                 currentScene.update(dt);
             }
 
+            this.imGuiLayer.update(dt, currentScene);
             glfwSwapBuffers(window);
 
             endTime = (float)glfwGetTime();
@@ -153,5 +162,21 @@ public class Window {
 
             beginTime = endTime;
         }
+    }
+
+    public static int getWidth() {
+        return get().width;
+    }
+
+    public static int getHeight() {
+        return get().height;
+    }
+
+    private static void setWidth(int newWidth) {
+        get().width = newWidth;
+    }
+
+    private static void setHeight(int newHeight) {
+        get().height = newHeight;
     }
 }

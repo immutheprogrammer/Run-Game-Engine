@@ -3,10 +3,12 @@ package util;
 import components.SpriteSheet;
 import renderer.Shader;
 import renderer.Texture;
+import run.im_gui.ImGuiLayer;
 
-import java.io.File;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AssetPool {
     private static Map<String, Shader> shaders = new HashMap<>();
@@ -33,6 +35,23 @@ public class AssetPool {
             Texture texture = new Texture(resourceName);
             AssetPool.textures.put(file.getAbsolutePath(), texture);
             return texture;
+        }
+    }
+
+    public static byte[] loadFonts(String fileName) {
+        try (InputStream is = Objects.requireNonNull(ImGuiLayer.class.getClassLoader().getResourceAsStream(fileName));
+             ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
+
+            final byte[] data = new byte[16384];
+
+            int nRead;
+            while ((nRead = is.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, nRead);
+            }
+
+            return buffer.toByteArray();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
 
