@@ -3,7 +3,6 @@ package components;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import renderer.Texture;
-import run.Component;
 import run.Transform;
 
 
@@ -23,6 +22,7 @@ public class SpriteRenderer extends Component {
     public SpriteRenderer(Sprite sprite) {
         this.sprite = sprite;
         this.colour = new Vector4f(1, 1, 1, 1);
+        this.isDirty = true;
     }
 
     @Override

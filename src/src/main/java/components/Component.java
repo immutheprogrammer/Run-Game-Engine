@@ -1,4 +1,6 @@
-package run;
+package components;
+
+import run.GameObject;
 
 public abstract class Component {
 
