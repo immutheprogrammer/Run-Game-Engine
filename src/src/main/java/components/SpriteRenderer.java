@@ -4,31 +4,38 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import renderer.Texture;
 import run.Component;
+import run.Transform;
 
 
 public class SpriteRenderer extends Component {
 
     private Vector4f colour;
-    private Vector2f[] texCoords;
-    private Texture texture;
+    private Sprite sprite;
+
+    private Transform lastTransform;
+    private boolean isDirty = false;
 
     public SpriteRenderer(Vector4f colour) {
         this.colour = colour;
-        this.texture = null;
+        this.sprite = new Sprite(null);
     }
 
-    public SpriteRenderer(Texture texture) {
-        this.texture = texture;
+    public SpriteRenderer(Sprite sprite) {
+        this.sprite = sprite;
         this.colour = new Vector4f(1, 1, 1, 1);
     }
 
     @Override
     public void start() {
+        this.lastTransform = gameObject.transform.copy();
     }
 
     @Override
     public void update(float dt) {
-
+        if (!this.lastTransform.equals(this.gameObject.transform)) {
+            this.gameObject.transform.copy(lastTransform);
+            isDirty = true;
+        }
     }
 
     public Vector4f getColour() {
@@ -36,18 +43,31 @@ public class SpriteRenderer extends Component {
     }
 
     public Texture getTexture() {
-        return this.texture;
+        return this.sprite.getTexture();
     }
 
     public Vector2f[] getTexCoords() {
-        Vector2f[] texCoords = {
-                new Vector2f(1, 1),
-                new Vector2f(1, 0),
-                new Vector2f(0, 0),
-                new Vector2f(0, 1)
-        };
+        return sprite.getTexCoords();
+    }
 
-        return texCoords;
+    public void setColour(Vector4f colour) {
+        if (this.colour.equals(colour)) {
+            this.isDirty = true;
+            this.colour.set(colour);
+        }
+    }
+
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+        this.isDirty = true;
+    }
+
+    public boolean isDirty() {
+        return this.isDirty;
+    }
+
+    public void setClean() {
+        this.isDirty = false;
     }
 }
 

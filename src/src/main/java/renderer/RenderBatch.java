@@ -109,10 +109,20 @@ public class RenderBatch {
     }
 
     public void render() {
-        // For now, we will rebuffer all data every frame
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        boolean rebufferData = false;
+        for (int i = 0; i < numSprites; i++) {
+            SpriteRenderer spr = sprites[i];
+            if (spr.isDirty()) {
+                loadVertexProperties(i);
+                spr.setClean();
+                rebufferData = true;
+            }
+        }
 
+        if (rebufferData) {
+            glBindBuffer(GL_ARRAY_BUFFER, vboID);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        }
         // Use shader
         shader.use();
         shader.uploadMat4f("uProjection", Window.getScene().camera().getProjectionMatrix());
@@ -221,5 +231,13 @@ public class RenderBatch {
 
     public boolean hasRoom() {
         return this.hasRoom;
+    }
+
+    public boolean hasTextureRoom() {
+        return this.textures.size() < 8;
+    }
+
+    public boolean hasTexture(Texture tex) {
+        return this.textures.contains(tex);
     }
 }
