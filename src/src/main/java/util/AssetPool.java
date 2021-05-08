@@ -32,30 +32,14 @@ public class AssetPool {
         if (AssetPool.textures.containsKey(file.getAbsolutePath())) {
             return AssetPool.textures.get(file.getAbsolutePath());
         } else {
-            Texture texture = new Texture(resourceName);
+            Texture texture = new Texture();
+            texture.init(resourceName);
             AssetPool.textures.put(file.getAbsolutePath(), texture);
             return texture;
         }
     }
 
-    public static byte[] loadFonts(String fileName) {
-        try (InputStream is = Objects.requireNonNull(ImGuiLayer.class.getClassLoader().getResourceAsStream(fileName));
-             ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
-
-            final byte[] data = new byte[16384];
-
-            int nRead;
-            while ((nRead = is.read(data, 0, data.length)) != -1) {
-                buffer.write(data, 0, nRead);
-            }
-
-            return buffer.toByteArray();
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
-
-    public static void addSpriteSheet(String resourceName, SpriteSheet spriteSheet) {
+    public static void getSpriteSheet(String resourceName, SpriteSheet spriteSheet) {
         File file = new File(resourceName);
         if (!AssetPool.spriteSheets.containsKey(file.getAbsolutePath())) {
             AssetPool.spriteSheets.put(file.getAbsolutePath(), spriteSheet);

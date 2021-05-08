@@ -1,6 +1,12 @@
 package run;
 
 
+import imgui.ImGui;
+import imgui.ImGuiIO;
+import imgui.ImGuiPlatformIO;
+import imgui.ImGuiViewport;
+import imgui.flag.ImGuiConfigFlags;
+import imgui.flag.ImGuiViewportFlags;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -80,7 +86,7 @@ public class Window {
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+        //glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
         window = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
         if (window == NULL) {
@@ -134,6 +140,7 @@ public class Window {
         // Terminate GLFW and free the error callback
         glfwTerminate();
         glfwSetErrorCallback(null).free();
+        imGuiLayer.destroyImGui();
     }
 
     private void loop() {
@@ -141,6 +148,7 @@ public class Window {
         float endTime;
         float dt = -1.0f;
 
+        currentScene.load();
         while (!glfwWindowShouldClose(window)) {
             // Poll events
             glfwPollEvents();
@@ -157,11 +165,17 @@ public class Window {
             this.imGuiLayer.update(dt, currentScene);
             glfwSwapBuffers(window);
 
+            if (ImGui.getIO().hasConfigFlags(ImGuiConfigFlags.ViewportsEnable)) {
+                ImGui.updatePlatformWindows();
+                ImGui.renderPlatformWindowsDefault();
+            }
+
             endTime = (float)glfwGetTime();
             dt = endTime - beginTime;
 
             beginTime = endTime;
         }
+        currentScene.saveExit();
     }
 
     public static int getWidth() {

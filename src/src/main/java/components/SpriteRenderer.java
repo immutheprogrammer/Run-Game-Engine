@@ -1,30 +1,25 @@
 package components;
 
 import imgui.ImGui;
+import imgui.type.ImFloat;
+import imgui.type.ImString;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import renderer.Texture;
 import run.Transform;
+import run.scenes.LevelEditorScene;
+
+import java.util.ArrayList;
 
 
 public class SpriteRenderer extends Component {
 
-    private Vector4f colour;
-    private Sprite sprite;
+    private Vector4f colour = new Vector4f(1f, 1f, 1f, 1f);
+    private Sprite sprite = new Sprite();
 
-    private Transform lastTransform;
-    private boolean isDirty = false;
+    private transient Transform lastTransform;
+    private transient boolean isDirty = false;
 
-    public SpriteRenderer(Vector4f colour) {
-        this.colour = colour;
-        this.sprite = new Sprite(null);
-    }
-
-    public SpriteRenderer(Sprite sprite) {
-        this.sprite = sprite;
-        this.colour = new Vector4f(1, 1, 1, 1);
-        this.isDirty = true;
-    }
 
     @Override
     public void start() {
