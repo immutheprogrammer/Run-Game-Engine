@@ -2,11 +2,7 @@ package run;
 
 
 import imgui.ImGui;
-import imgui.ImGuiIO;
-import imgui.ImGuiPlatformIO;
-import imgui.ImGuiViewport;
 import imgui.flag.ImGuiConfigFlags;
-import imgui.flag.ImGuiViewportFlags;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -17,7 +13,7 @@ import run.scenes.LevelEditorScene;
 import run.scenes.LevelScene;
 import run.scenes.Scene;
 
-import static org.lwjgl.glfw.Callbacks.*;
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL40.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -48,18 +44,18 @@ public class Window {
         switch (newScene) {
             case 0:
                 currentScene = new LevelEditorScene();
-                currentScene.init();
-                currentScene.start();
                 break;
             case 1:
                 currentScene = new LevelScene();
-                currentScene.init();
-                currentScene.start();
                 break;
             default:
                 assert false : "Unknown Scene " + newScene;
                 break;
         }
+
+        currentScene.load();
+        currentScene.init();
+        currentScene.start();
     }
 
     public static Window get() {
@@ -86,7 +82,7 @@ public class Window {
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        //glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+        glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
         window = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
         if (window == NULL) {
@@ -148,7 +144,6 @@ public class Window {
         float endTime;
         float dt = -1.0f;
 
-        currentScene.load();
         while (!glfwWindowShouldClose(window)) {
             // Poll events
             glfwPollEvents();

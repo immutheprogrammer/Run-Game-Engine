@@ -1,6 +1,7 @@
 package run;
 
 import components.Component;
+import imgui.ImGui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,23 @@ public class GameObject {
     public void imgui() {
         for (Component c : components) {
            c.imgui();
+        }
+        float positions[] = {
+            transform.position.x, transform.position.y
+        };
+
+        float scale[] = {
+            transform.scale.x, transform.scale.y
+        };
+
+        if (ImGui.dragFloat2("Position: ", positions)) {
+            transform.position.x = positions[0];
+            transform.position.y = positions[1];
+        }
+
+        if (ImGui.dragFloat2("Scale: ", scale)) {
+            transform.scale.x = scale[0];
+            transform.scale.y = scale[1];
         }
     }
 
