@@ -4,6 +4,8 @@ How to build on all platforms:
 
 its pretty simple just run the buld.gradle file and run the main file. 
 
+if you find any issues please report them into the issues section.
+
 **Known Issues:**
 
 if you look in the gradle file you might be wondering why I import imgui-java 3 time for each platform and thats becuase it imports the macos bindings for me instead of the windows bindings for some reason.
