@@ -31,15 +31,15 @@ in float fTexID;
 
 uniform sampler2D uTextures[8];
 
-out vec4 Colour;
+out vec4 colour;
 
 void main()
 {
     if (fTexID > 0) {
         int id = int(fTexID);
-        Colour = fColour * texture(uTextures[id], fTexCoords);
+        colour = fColour * texture(uTextures[id], fTexCoords);
     } else {
-        Colour = fColour;
+        colour = fColour;
     }
 }
 

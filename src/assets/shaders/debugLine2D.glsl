@@ -22,9 +22,9 @@ void main()
 in vec3 fColour;
 
 
-out vec4 Colour;
+out vec4 colour;
 
 void main()
 {
-    Colour = vec4(fColour, 1.0);
+    colour = vec4(fColour, 1.0);
 }
