@@ -6,6 +6,11 @@ its pretty simple just run the buld.gradle file and run the main file.
 
 if you find any issues please report them into the issues section.
 
+**Some Future Features**
+The engine may have a simple 3D render so if you want to make a 3D game you can.
+
+im still brainstorming ideas for some more features...
+
 **Known Issues:**
 
 if you look in the gradle file you might be wondering why I import imgui-java 3 time for each platform and thats becuase it imports the macos bindings for me instead of the windows bindings for some reason.
