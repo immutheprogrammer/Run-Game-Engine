@@ -6,7 +6,7 @@ its pretty simple just run the buld.gradle file and run the main file.
 
 if you find any issues please report them into the issues section.
 
-**Some Future Features**
+**Some Future Features:**
 
 The engine may have a simple 3D render so if you want to make a 3D game you can.
 
