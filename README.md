@@ -14,7 +14,7 @@ I can't figure out why imgui-java imports the macos bindings.
 
 another bug is when resizeing the window some features may break.
 
-when using the engine make sure it is at 1920x1080 for it to work properly.
+when using the engine make sure the screen width and height are at 1920x1080 for it to work properly.
 
 **(fixed)** when panning the window the and you are holding a texture the position of the texture will shift.
 
