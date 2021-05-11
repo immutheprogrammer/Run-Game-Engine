@@ -26,11 +26,14 @@ public class LevelEditorScene extends Scene {
     private ImBoolean showWireFrame = new ImBoolean(false);
     private float deltaTime;
 
+    static Vector2f cameraStartingPosition;
+
     GameObject levelEditorStuff = new GameObject("LevelEditor", new Transform(new Vector2f()), 0);
 
     public LevelEditorScene() {
 
     }
+
 
     @Override
     public void init() {
@@ -39,6 +42,8 @@ public class LevelEditorScene extends Scene {
 
         loadResources();
         this.camera = new Camera(new Vector2f(0f, 0f));
+
+        cameraStartingPosition = camera().position;
         if (loadedFile) {
             this.activeGameObject = gameObjects.get(0);
             return;
@@ -71,16 +76,16 @@ public class LevelEditorScene extends Scene {
 
         // I know this panning system is bad but im not really working on it right now
         if (MouseListener.isDragging()) {
-            if (MouseListener.getX() < (MouseListener.getLastX() + 10)) {
+            if (MouseListener.getX() < (MouseListener.getLastX() + 5)) {
                    camera.position.x += 10;
             }
-            if (MouseListener.getX() > (MouseListener.getLastX() - 10)) {
+            if (MouseListener.getX() > (MouseListener.getLastX() - 5)) {
                 camera.position.x -= 10;
             }
-            if (MouseListener.getY() < (MouseListener.getLastY() - 10)) {
+            if (MouseListener.getY() < (MouseListener.getLastY() - 5)) {
                 camera.position.y -= 10;
             }
-            if (MouseListener.getY() > (MouseListener.getLastY() + 10)) {
+            if (MouseListener.getY() > (MouseListener.getLastY() + 5)) {
                 camera.position.y += 10;
             }
         }
@@ -103,8 +108,11 @@ public class LevelEditorScene extends Scene {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
 
-        ImGui.begin("Texture Picker");
+        if (ImGui.button("Reset Camera Position")) {
+            camera.position = new Vector2f();
+        }
 
+        ImGui.begin("Texture Picker");
 
         ImVec2 windowPos = new ImVec2();
         ImGui.getWindowPos(windowPos);
@@ -140,5 +148,9 @@ public class LevelEditorScene extends Scene {
 
         ImGui.end();
 
+    }
+
+    public static Vector2f getCameraStartingPosition() {
+        return cameraStartingPosition;
     }
 }

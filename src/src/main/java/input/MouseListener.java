@@ -79,7 +79,7 @@ public class MouseListener {
         // Makes our mouse coords form range -1 -> 1
         // to world coords 0 -> 1920
         tmp.mul(Window.getScene().camera().getInverseProjectMatrix()).mul(Window.getScene().camera().getViewMatrix());
-        currentX = tmp.x;
+        currentX = tmp.x + Window.getScene().camera().position.x * 2;
 
         return currentX;
     }
@@ -92,8 +92,7 @@ public class MouseListener {
         // Makes our mouse coords form range -1 -> 1
         // to world coords 0 -> 1080
         tmp.mul(Window.getScene().camera().getInverseProjectMatrix()).mul(Window.getScene().camera().getViewMatrix());
-        currentY = tmp.y;
-
+        currentY = tmp.y + Window.getScene().camera().position.y * 2;
         return currentY;
     }
 
@@ -133,7 +132,5 @@ public class MouseListener {
         return get().lastX;
     }
 
-    public static double getLastY() {
-        return  get().lastY;
-    }
+    public static double getLastY() { return get().lastY; }
 }

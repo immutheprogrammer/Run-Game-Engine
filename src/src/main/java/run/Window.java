@@ -37,8 +37,8 @@ public class Window {
 
 
     private Window() {
-        this.width = 1920;
-        this.height = 1080;
+        this.width = 1280;
+        this.height = 720;
         this.title = "Run Engine Tests";
     }
 
@@ -88,7 +88,7 @@ public class Window {
 
         window = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
         if (window == NULL) {
-            throw new IllegalStateException("Failed to create the glfwWindow");
+            throw new IllegalStateException("Failed to create the GLFW window");
         }
 
         // Sets the mouse callbacks
