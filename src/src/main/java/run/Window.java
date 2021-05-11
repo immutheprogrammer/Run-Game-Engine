@@ -163,13 +163,13 @@ public class Window {
                 currentScene.update(dt);
             }
 
-            this.imGuiLayer.update(dt, currentScene);
-            glfwSwapBuffers(window);
-
+            // Can't get multi-view port support working :(
             if (ImGui.getIO().hasConfigFlags(ImGuiConfigFlags.ViewportsEnable)) {
                 ImGui.updatePlatformWindows();
                 ImGui.renderPlatformWindowsDefault();
             }
+            this.imGuiLayer.update(dt, currentScene);
+            glfwSwapBuffers(window);
 
             endTime = (float) glfwGetTime();
             dt = endTime - beginTime;
