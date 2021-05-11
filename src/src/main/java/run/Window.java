@@ -2,16 +2,17 @@ package run;
 
 
 import imgui.ImGui;
+import imgui.ImGuiLayer;
 import imgui.flag.ImGuiConfigFlags;
+import input.KeyListener;
+import input.MouseListener;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
-import run.im_gui.ImGuiLayer;
-import run.input.KeyListener;
-import run.input.MouseListener;
-import run.scenes.LevelEditorScene;
-import run.scenes.LevelScene;
-import run.scenes.Scene;
+import renderer.DebugDraw;
+import scenes.LevelEditorScene;
+import scenes.LevelScene;
+import scenes.Scene;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -34,9 +35,10 @@ public class Window {
 
     private static Scene currentScene;
 
+
     private Window() {
-        this.width = 1280;
-        this.height = 720;
+        this.width = 1920;
+        this.height = 1080;
         this.title = "Run Engine Tests";
     }
 
@@ -117,10 +119,11 @@ public class Window {
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-        this.imGuiLayer = new ImGuiLayer(window);
-        this.imGuiLayer.initImGui();
 
         Window.changeScene(0);
+
+        this.imGuiLayer = new ImGuiLayer(window);
+        this.imGuiLayer.initImGui();
     }
 
     public void run() {
@@ -140,7 +143,7 @@ public class Window {
     }
 
     private void loop() {
-        float beginTime = (float)glfwGetTime();
+        float beginTime = (float) glfwGetTime();
         float endTime;
         float dt = -1.0f;
 
@@ -148,12 +151,15 @@ public class Window {
             // Poll events
             glfwPollEvents();
 
+            DebugDraw.beginFrame();
+
             // Change the colour of the screen
             glClearColor(r, g, b, a);
             // Clears the window
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             if (dt >= 0) {
+                DebugDraw.draw();
                 currentScene.update(dt);
             }
 
@@ -165,7 +171,7 @@ public class Window {
                 ImGui.renderPlatformWindowsDefault();
             }
 
-            endTime = (float)glfwGetTime();
+            endTime = (float) glfwGetTime();
             dt = endTime - beginTime;
 
             beginTime = endTime;

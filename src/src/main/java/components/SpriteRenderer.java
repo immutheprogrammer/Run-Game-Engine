@@ -6,7 +6,6 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import renderer.Texture;
 import run.Transform;
-import run.scenes.LevelEditorScene;
 
 import java.util.ArrayList;
 

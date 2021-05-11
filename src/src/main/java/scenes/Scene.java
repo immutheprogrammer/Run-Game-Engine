@@ -1,4 +1,4 @@
-package run.scenes;
+package scenes;
 
 
 import com.google.gson.Gson;
@@ -7,10 +7,11 @@ import components.Component;
 import imgui.ImGui;
 import renderer.Renderer;
 import run.Camera;
-import run.ComponentDeserializer;
+import components.ComponentDeserializer;
 import run.GameObject;
 import run.GameObjectDeserializer;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -101,15 +102,34 @@ public abstract class Scene {
         String inFile = "";
         try {
             inFile = new String(Files.readAllBytes(Paths.get("level.json")));
+            if (inFile.isEmpty()) {
+                File file = new File("level.json");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         if (!inFile.equals("")) {
+            int maxGoID = -1;
+            int maxCompID = -1;
             GameObject[] objs = gson.fromJson(inFile, GameObject[].class);
             for (int i=0; i < objs.length; i++) {
                 addGameObjectToScene(objs[i]);
+
+                for (Component c : objs[i].getAllComponents()) {
+                    if (c.getUID() > maxCompID) {
+                        maxCompID = c.getUID();
+                    }
+                }
+                if (objs[i].getUID() > maxGoID) {
+                    maxGoID = objs[i].getUID();
+                }
             }
+
+            maxGoID++;
+            maxCompID++;
+            GameObject.init(maxGoID);
+            Component.init(maxCompID);
             this.loadedFile = true;
         }
     }

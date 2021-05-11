@@ -80,6 +80,11 @@ public class Texture {
         return height;
     }
 
+    public int getID() {
+        return texID;
+    }
+
+
     // 12:15
 
 }

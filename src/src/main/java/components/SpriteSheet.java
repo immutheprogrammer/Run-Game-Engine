@@ -33,6 +33,8 @@ public class SpriteSheet {
             Sprite sprite = new Sprite();
             sprite.setTexture(this.texture);
             sprite.setTextureCoords(texCoords);
+            sprite.setWidth(spriteWidth);
+            sprite.setHeight(spriteHeight);
             this.sprites.add(sprite);
 
             currentX += spriteWidth + spacing;
@@ -51,5 +53,9 @@ public class SpriteSheet {
 
         assert false : "ERROR: index: " + index + " is out of range";
         return null;
+    }
+
+    public int size() {
+        return sprites.size();
     }
 }

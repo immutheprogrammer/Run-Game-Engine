@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameObject {
+    private static int ID_COUNTER = 0;
+    private int uid = -1;
 
     private String name;
     private List<Component> components;
@@ -14,18 +16,13 @@ public class GameObject {
 
     private int zIndex;
 
-    public GameObject(String name, int zIndex) {
-        this.name = name;
-        this.components = new ArrayList<>();
-        this.transform = new Transform();
-        this.zIndex = zIndex;
-    }
-
     public GameObject(String name, Transform transform, int zIndex) {
         this.name = name;
         this.components = new ArrayList<>();
         this.transform = transform;
         this.zIndex = zIndex;
+
+        this.uid = ID_COUNTER++;
     }
 
     // T is like a placeholder
@@ -56,6 +53,7 @@ public class GameObject {
     }
 
     public void addComponent(Component c) {
+        c.generateID();
         this.components.add(c);
         c.gameObject = this;
     }
@@ -98,5 +96,17 @@ public class GameObject {
 
     public int zIndex() {
         return zIndex;
+    }
+
+    public static void init(int maxID) {
+        ID_COUNTER = maxID;
+    }
+
+    public int getUID() {
+        return this.uid;
+    }
+
+    public List<Component> getAllComponents() {
+        return this.components;
     }
 }

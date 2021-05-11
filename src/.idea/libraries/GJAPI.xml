@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="GJAPI">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/GJAPI.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

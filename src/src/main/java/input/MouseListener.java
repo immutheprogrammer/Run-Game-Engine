@@ -1,4 +1,7 @@
-package run.input;
+package input;
+
+import org.joml.Vector4f;
+import run.Window;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
@@ -7,7 +10,7 @@ public class MouseListener {
     private static MouseListener instance;
     private double scrollX, scrollY;
     private double xPos, yPos, lastX, lastY;
-    private boolean mouseButtonsPressed[] = new boolean[3];
+    private boolean mouseButtonsPressed[] = new boolean[9];
     private boolean isDragging;
 
     private MouseListener() {
@@ -69,6 +72,31 @@ public class MouseListener {
         return (float)get().yPos;
     }
 
+    public static float getOrthoX() {
+        float currentX = getX();
+        currentX = (currentX / (float) Window.getWidth()) * 2.0f - 1.0f;
+        Vector4f tmp = new Vector4f(currentX, 0f, 0f, 1f);
+        // Makes our mouse coords form range -1 -> 1
+        // to world coords 0 -> 1920
+        tmp.mul(Window.getScene().camera().getInverseProjectMatrix()).mul(Window.getScene().camera().getViewMatrix());
+        currentX = tmp.x;
+
+        return currentX;
+    }
+
+    public static float getOrthoY() {
+        float currentY = Window.getHeight() - getY();
+
+        currentY = (currentY / (float) Window.getHeight()) * 2.0f - 1.0f;
+        Vector4f tmp = new Vector4f(0f, currentY, 0f, 1f);
+        // Makes our mouse coords form range -1 -> 1
+        // to world coords 0 -> 1080
+        tmp.mul(Window.getScene().camera().getInverseProjectMatrix()).mul(Window.getScene().camera().getViewMatrix());
+        currentY = tmp.y;
+
+        return currentY;
+    }
+
     public static float getDx() {
         return (float)(get().lastX - get().xPos);
     }
@@ -97,5 +125,7 @@ public class MouseListener {
     }
 
 
-
+    public static boolean mouseButtonDown(int button) {
+        return get().mouseButtonsPressed[button];
+    }
 }

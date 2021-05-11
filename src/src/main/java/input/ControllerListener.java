@@ -1,4 +1,4 @@
-package run.input;
+package input;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;

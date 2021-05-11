@@ -1,4 +1,4 @@
-package run.scenes;
+package scenes;
 
 public class LevelScene extends Scene{
 

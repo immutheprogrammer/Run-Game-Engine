@@ -1,15 +1,16 @@
-package run.im_gui;
+package imgui;
 
-import imgui.ImFontAtlas;
-import imgui.ImFontConfig;
-import imgui.ImGui;
-import imgui.ImGuiIO;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
-import imgui.flag.*;
+import imgui.flag.ImGuiBackendFlags;
+import imgui.flag.ImGuiConfigFlags;
+import imgui.flag.ImGuiKey;
+import imgui.flag.ImGuiMouseCursor;
 import imgui.gl3.ImGuiImplGl3;
+import input.KeyListener;
+import input.MouseListener;
 import run.Window;
-import run.scenes.Scene;
+import scenes.Scene;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -101,6 +102,10 @@ public class ImGuiLayer {
             io.setKeyShift(io.getKeysDown(GLFW_KEY_LEFT_SHIFT) || io.getKeysDown(GLFW_KEY_RIGHT_SHIFT));
             io.setKeyAlt(io.getKeysDown(GLFW_KEY_LEFT_ALT) || io.getKeysDown(GLFW_KEY_RIGHT_ALT));
             io.setKeySuper(io.getKeysDown(GLFW_KEY_LEFT_SUPER) || io.getKeysDown(GLFW_KEY_RIGHT_SUPER));
+
+            if (!io.getWantCaptureKeyboard()) {
+                KeyListener.keyCallback(w, key, scancode, action, mods);
+            }
         });
 
         glfwSetCharCallback(window, (w, c) -> {
@@ -123,11 +128,16 @@ public class ImGuiLayer {
             if (!io.getWantCaptureMouse() && mouseDown[1]) {
                 ImGui.setWindowFocus(null);
             }
+
+            if (!io.getWantCaptureMouse()) {
+                MouseListener.mouseButtonCallback(w, button, action, mods);
+            }
         });
 
         glfwSetScrollCallback(window, (w, xOffset, yOffset) -> {
             io.setMouseWheelH(io.getMouseWheelH() + (float) xOffset);
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
+
         });
 
         io.setSetClipboardTextFn(new ImStrConsumer() {
