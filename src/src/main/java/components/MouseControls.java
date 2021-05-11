@@ -10,6 +10,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 public class MouseControls extends Component {
     GameObject holdingObject = null;
 
+
     public void pickUpObject(GameObject go) {
         this.holdingObject = go;
         Window.getScene().addGameObjectToScene(go);
@@ -32,4 +33,6 @@ public class MouseControls extends Component {
             }
         }
     }
+
+
 }

@@ -10,7 +10,6 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 1.11
 
 
-
 repositories {
     mavenCentral()
 }
@@ -78,4 +77,15 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
 
     implementation "org.joml:joml:${jomlVersion}"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'Main'
+    }
+    from {
+        configurations.compile.collect {
+            it.isDirectory()? it: zipTree(it)
+        }
+    }
 }

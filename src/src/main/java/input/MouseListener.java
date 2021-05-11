@@ -128,4 +128,12 @@ public class MouseListener {
     public static boolean mouseButtonDown(int button) {
         return get().mouseButtonsPressed[button];
     }
+
+    public static double getLastX() {
+        return get().lastX;
+    }
+
+    public static double getLastY() {
+        return  get().lastY;
+    }
 }

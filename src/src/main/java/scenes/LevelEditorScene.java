@@ -7,6 +7,7 @@ import components.SpriteSheet;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.type.ImBoolean;
+import input.MouseListener;
 import org.joml.Vector2f;
 import run.Camera;
 import run.GameObject;
@@ -67,6 +68,22 @@ public class LevelEditorScene extends Scene {
         levelEditorStuff.update(dt);
 
         deltaTime = dt;
+
+        // I know this panning system is bad but im not really working on it right now
+        if (MouseListener.isDragging()) {
+            if (MouseListener.getX() < (MouseListener.getLastX() + 10)) {
+                   camera.position.x += 10;
+            }
+            if (MouseListener.getX() > (MouseListener.getLastX() - 10)) {
+                camera.position.x -= 10;
+            }
+            if (MouseListener.getY() < (MouseListener.getLastY() - 10)) {
+                camera.position.y -= 10;
+            }
+            if (MouseListener.getY() > (MouseListener.getLastY() + 10)) {
+                camera.position.y += 10;
+            }
+        }
 
         for (GameObject go : this.gameObjects) {
             go.update(dt);
