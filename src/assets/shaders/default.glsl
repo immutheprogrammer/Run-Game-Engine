@@ -1,24 +1,3 @@
-#type fragment
-#version 330 core
-
-in vec4 fColour;
-in vec2 fTexCoords;
-in float fTexID;
-
-uniform sampler2D uTextures[8];
-
-out vec4 Colour;
-
-void main()
-{
-    if (fTexID > 0) {
-        int id = int(fTexID);
-        Colour = fColour * texture(uTextures[id], fTexCoords);
-    } else {
-        Colour = fColour;
-    }
-}
-
 #type vertex
 #version 330 core
 
@@ -41,5 +20,26 @@ void main()
     fTexCoords = aTexCoords;
     fTexID = aTexID;
     gl_Position = uProjection * uView * vec4(aPos, 1.0);
+}
+
+    #type fragment
+    #version 330 core
+
+in vec4 fColour;
+in vec2 fTexCoords;
+in float fTexID;
+
+uniform sampler2D uTextures[8];
+
+out vec4 Colour;
+
+void main()
+{
+    if (fTexID > 0) {
+        int id = int(fTexID);
+        Colour = fColour * texture(uTextures[id], fTexCoords);
+    } else {
+        Colour = fColour;
+    }
 }
 
