@@ -14,7 +14,7 @@ another bug is when resizeing the window some features may break.
 
 when using the engine make sure it is at 1920x1080 for it to work properly.
 
-when panning the window the and you are holding a texture the position of the texture will shift.
+**(fixed)** when panning the window the and you are holding a texture the position of the texture will shift.
 
 and when making the grid width 20 or under the some of the grids vertical lines wount load properly.
 
