@@ -1,9 +1,7 @@
 package run;
 
 
-import imgui.ImGui;
 import imgui.ImGuiLayer;
-import imgui.flag.ImGuiConfigFlags;
 import input.KeyInput;
 import input.MouseInput;
 import org.cef.OS;
@@ -89,7 +87,7 @@ public class Window {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
-        
+
         if (OS.isMacintosh()) {
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
@@ -136,7 +134,8 @@ public class Window {
         this.imGuiLayer = new ImGuiLayer(window);
         this.imGuiLayer.initImGui();
 
-        this.frameBuffer = new FrameBuffer(1920, 1080);
+        this.frameBuffer = new FrameBuffer(Window.getWidth(), Window.getHeight());
+        glViewport(0, 0, Window.getWidth(), Window.getHeight());
     }
 
     public void run() {
@@ -166,12 +165,13 @@ public class Window {
 
             DebugDraw.beginFrame();
 
+            this.frameBuffer.bind();
+
             // Change the colour of the screen
             glClearColor(r, g, b, a);
             // Clears the window
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            //this.frameBuffer.bind();
             if (dt >= 0) {
                 DebugDraw.draw();
                 currentScene.update(dt);
@@ -179,13 +179,13 @@ public class Window {
             this.frameBuffer.unbind();
 
             // Broken camera zooming code
-            // getScene().camera().adjustProjection();
+/*           getScene().camera().adjustProjection();
 
             // Can't get multi-view port support working :(
             if (ImGui.getIO().hasConfigFlags(ImGuiConfigFlags.ViewportsEnable)) {
                 ImGui.updatePlatformWindows();
                 ImGui.renderPlatformWindowsDefault();
-            }
+            }*/
             this.imGuiLayer.update(dt, currentScene);
             glfwSwapBuffers(window);
 
@@ -211,5 +211,13 @@ public class Window {
 
     private static void setHeight(int newHeight) {
         get().height = newHeight;
+    }
+
+    public static FrameBuffer getFrambuffer() {
+        return get().frameBuffer;
+    }
+
+    public static float getTargetAspectRation() {
+        return 16.0f / 9.0f;
     }
 }

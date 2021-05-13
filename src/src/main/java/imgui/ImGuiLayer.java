@@ -1,12 +1,11 @@
 package imgui;
 
+import editor.GameViewWindow;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
-import imgui.flag.ImGuiBackendFlags;
-import imgui.flag.ImGuiConfigFlags;
-import imgui.flag.ImGuiKey;
-import imgui.flag.ImGuiMouseCursor;
+import imgui.flag.*;
 import imgui.gl3.ImGuiImplGl3;
+import imgui.type.ImBoolean;
 import input.KeyInput;
 import input.MouseInput;
 import run.Window;
@@ -129,7 +128,7 @@ public class ImGuiLayer {
                 ImGui.setWindowFocus(null);
             }
 
-            if (!io.getWantCaptureMouse()) {
+            if (!io.getWantCaptureMouse() || GameViewWindow.getWantCaptureMouse()) {
                 MouseInput.mouseButtonCallback(w, button, action, mods);
             }
         });
@@ -192,7 +191,10 @@ public class ImGuiLayer {
 
         // Any Dear ImGui code SHOULD go between ImGui.newFrame()/ImGui.render() methods
         ImGui.newFrame();
+        setupDockSpace();
         currentScene.sceneImgui();
+        GameViewWindow.imgui();
+        ImGui.end();
         ImGui.render();
         endFrame();
     }
@@ -230,5 +232,27 @@ public class ImGuiLayer {
     public void destroyImGui() {
         imGuiGl3.dispose();
         ImGui.destroyContext();
+    }
+
+    private void setupDockSpace() {
+        int windowFlags = ImGuiWindowFlags.MenuBar;
+
+        ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always);
+        ImGui.setNextWindowSize(Window.getWidth(), Window.getHeight());
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
+        ImGui.pushStyleColor(ImGuiCol.Header, 0, 0, 0, 1);
+        ImGui.pushStyleColor(ImGuiCol.Tab, 0, 0, 0, 1);
+        ImGui.pushStyleColor(ImGuiCol.TabActive, 0, 0, 0, 1);
+        ImGui.pushStyleColor(ImGuiCol.TabUnfocused, 0, 0, 0, 1);
+        ImGui.pushStyleColor(ImGuiCol.TitleBg, 0, 0, 0, 1);
+
+        windowFlags |= ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus;
+
+        ImGui.begin("Dockspace Demo", new ImBoolean(true), windowFlags);
+        ImGui.popStyleVar(2);
+        ImGui.popStyleColor(5);
+
+        ImGui.dockSpace(ImGui.getID("Dockspace"));
     }
 }

@@ -1,6 +1,9 @@
 package input;
 
+import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
+import run.Camera;
 import run.Window;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
@@ -13,6 +16,9 @@ public class MouseInput {
     private final boolean[] mouseButtonsPressed = new boolean[9];
     private boolean isDragging;
 
+    private Vector2f gameViewportPos = new Vector2f();
+
+    private Vector2f gameViewportSize = new Vector2f();
     private MouseInput() {
         this.scrollX = 0.0;
         this.scrollY = 0.0;
@@ -75,26 +81,30 @@ public class MouseInput {
     }
 
     public static float getOrthoX() {
-        float currentX = getX();
-        currentX = (currentX / (float) Window.getWidth()) * 2.0f - 1.0f;
-        Vector4f tmp = new Vector4f(currentX, 0f, 0f, 1f);
-        // Makes our mouse coords form range -1 -> 1
-        // to world coords 0 -> 1920
-        tmp.mul(Window.getScene().camera().getInverseProjectMatrix()).mul(Window.getScene().camera().getViewMatrix());
-        currentX = tmp.x + Window.getScene().camera().position.x * 2;
+        float currentX = getX() - get().gameViewportPos.x;
+        currentX = (currentX / get().gameViewportSize.x) * 2.0f - 1.0f;
+        Vector4f tmp = new Vector4f(currentX, 0, 0, 1);
+
+        Camera camera = Window.getScene().camera();
+        Matrix4f viewProjection = new Matrix4f();
+        camera.getInverseViewMatrix().mul(camera.getInverseProjectMatrix(), viewProjection);
+        tmp.mul(viewProjection);
+        currentX = tmp.x;
 
         return currentX;
     }
 
     public static float getOrthoY() {
-        float currentY = Window.getHeight() - getY();
+        float currentY = getY() - get().gameViewportPos.y;
+        currentY = -((currentY / get().gameViewportSize.y) * 2.0f - 1.0f);
+        Vector4f tmp = new Vector4f(0, currentY, 0, 1);
 
-        currentY = (currentY / (float) Window.getHeight()) * 2.0f - 1.0f;
-        Vector4f tmp = new Vector4f(0f, currentY, 0f, 1f);
-        // Makes our mouse coords form range -1 -> 1
-        // to world coords 0 -> 1080
-        tmp.mul(Window.getScene().camera().getInverseProjectMatrix()).mul(Window.getScene().camera().getViewMatrix());
-        currentY = tmp.y + Window.getScene().camera().position.y * 2;
+        Camera camera = Window.getScene().camera();
+        Matrix4f viewProjection = new Matrix4f();
+        camera.getInverseViewMatrix().mul(camera.getInverseProjectMatrix(), viewProjection);
+        tmp.mul(viewProjection);
+        currentY = tmp.y;
+
         return currentY;
     }
 
@@ -129,4 +139,12 @@ public class MouseInput {
     }
 
     public static double getLastY() { return get().lastY; }
+
+    public static void setGameViewportPos(Vector2f gameViewportPos) {
+        get().gameViewportPos.set(gameViewportPos);
+    }
+
+    public static  void setGameViewportSize(Vector2f gameViewportSize) {
+        get().gameViewportSize.set(gameViewportSize);
+    }
 }
