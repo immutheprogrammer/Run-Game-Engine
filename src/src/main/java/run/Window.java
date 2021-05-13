@@ -6,10 +6,12 @@ import imgui.ImGuiLayer;
 import imgui.flag.ImGuiConfigFlags;
 import input.KeyInput;
 import input.MouseInput;
+import org.cef.OS;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import renderer.DebugDraw;
+import renderer.FrameBuffer;
 import scenes.LevelEditorScene;
 import scenes.LevelScene;
 import scenes.Scene;
@@ -32,6 +34,8 @@ public class Window {
     private static Window windowInstance;
     private long window;
     private ImGuiLayer imGuiLayer;
+    private FrameBuffer frameBuffer;
+
 
     private static Scene currentScene;
 
@@ -85,6 +89,13 @@ public class Window {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+        
+        if (OS.isMacintosh()) {
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        }
 
         window = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
         if (window == NULL) {
@@ -124,6 +135,8 @@ public class Window {
 
         this.imGuiLayer = new ImGuiLayer(window);
         this.imGuiLayer.initImGui();
+
+        this.frameBuffer = new FrameBuffer(1920, 1080);
     }
 
     public void run() {
@@ -158,10 +171,13 @@ public class Window {
             // Clears the window
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+            //this.frameBuffer.bind();
             if (dt >= 0) {
                 DebugDraw.draw();
                 currentScene.update(dt);
             }
+            this.frameBuffer.unbind();
+
             // Broken camera zooming code
             // getScene().camera().adjustProjection();
 

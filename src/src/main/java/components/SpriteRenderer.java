@@ -7,8 +7,6 @@ import org.joml.Vector4f;
 import renderer.Texture;
 import run.Transform;
 
-import java.util.ArrayList;
-
 
 public class SpriteRenderer extends Component {
 
@@ -63,6 +61,10 @@ public class SpriteRenderer extends Component {
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
         this.isDirty = true;
+    }
+
+    public void setTexture(Texture texture) {
+        this.sprite.setTexture(texture);
     }
 
     public boolean isDirty() {

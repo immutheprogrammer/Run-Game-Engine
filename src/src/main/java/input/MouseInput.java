@@ -56,17 +56,7 @@ public class MouseInput {
         get().scrollX = xOffset;
         get().scrollY = yOffset;
 
-        // Broken zooming code
-        /*
 
-        if (Window.getScene().camera().getProjectionSize().x < 1)
-            Window.getScene().camera().getProjectionSize().x = 1;
-        else if (Window.getScene().camera().getProjectionSize().y < 1)
-            Window.getScene().camera().getProjectionSize().y = 1;
-        if (Window.getScene().camera().getProjectionSize().x > 1919)
-        Window.getScene().camera().getProjectionSize().x += yOffset * 20;
-        Window.getScene().camera().getProjectionSize().y += yOffset * 20;
-        */
     }
 
     public static void endFrame() {

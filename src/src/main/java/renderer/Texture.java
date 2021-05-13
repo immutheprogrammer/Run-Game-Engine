@@ -7,19 +7,36 @@ import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL40.*;
 import static org.lwjgl.stb.STBImage.*;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Texture {
 
     private String filepath;
-    private int texID;
+    private transient int texID;
 
     private int width, height;
 
+    public Texture(int width, int height) {
+        this.filepath = filepath;
+
+        // Generate the texture on GPU
+        texID = glGenTextures();
+        glBindTexture(GL_TEXTURE_2D, texID);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height,
+                0, GL_RGB,GL_UNSIGNED_BYTE, NULL);
+    }
+
+    public Texture() {
+        texID = -1;
+        width = -1;
+        height = -1;
+    }
 
 
     public void init(String filepath) {
 
-        this.filepath = filepath;
+        this.filepath = "Generated";
 
         // Generate the texture
         texID = glGenTextures();
@@ -64,6 +81,17 @@ public class Texture {
         stbi_image_free(image);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (!(o instanceof Texture)) return false;
+        Texture oTex = (Texture)o;
+        return oTex.getWidth() == this.width && oTex.getHeight() == this.height
+        && oTex.getID() == this.texID
+        && oTex.getFilepath().equals(this.filepath);
+    }
+
+
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, texID);
     }
@@ -84,7 +112,8 @@ public class Texture {
         return texID;
     }
 
-
-    // 12:15
+    public String getFilepath() {
+        return this.filepath;
+    }
 
 }

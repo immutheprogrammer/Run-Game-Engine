@@ -2,8 +2,8 @@ package renderer;
 
 import components.SpriteRenderer;
 import org.joml.Vector2f;
-import run.Window;
 import org.joml.Vector4f;
+import run.Window;
 import util.AssetPool;
 
 import java.util.ArrayList;
@@ -166,7 +166,7 @@ public class RenderBatch implements Comparable<RenderBatch> {
         int texID = 0;
         if (sprite.getTexture() != null) {
             for (int i = 0; i < textures.size(); i++) {
-                if (textures.get(i) == sprite.getTexture()) {
+                if (textures.get(i).equals(sprite.getTexture())) {
                     texID = i + 1;
                     break;
                 }

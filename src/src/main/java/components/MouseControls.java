@@ -14,6 +14,7 @@ public class MouseControls extends Component {
     public void pickUpObject(GameObject go) {
         this.holdingObject = go;
         Window.getScene().addGameObjectToScene(go);
+        Window.getScene().setActiveGameObject(go);
     }
 
     public void place() {

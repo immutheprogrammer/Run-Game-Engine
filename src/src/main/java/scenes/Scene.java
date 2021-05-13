@@ -25,9 +25,10 @@ public abstract class Scene {
     protected Camera camera;
     private boolean isRunning = false;
     protected List<GameObject> gameObjects = new ArrayList<>();
-    protected GameObject activeGameObject = null;
-    protected boolean loadedFile = false;
 
+    protected GameObject activeGameObject = null;
+
+    protected boolean loadedFile = false;
     public Scene() {
 
     }
@@ -36,7 +37,7 @@ public abstract class Scene {
     public void init() {
 
     }
-    
+
     public void start() {
         for (GameObject go : gameObjects) {
             go.start();
@@ -44,7 +45,7 @@ public abstract class Scene {
         }
         isRunning = true;
     }
-    
+
     public void addGameObjectToScene(GameObject go) {
         if (!isRunning) {
             gameObjects.add(go);
@@ -134,4 +135,12 @@ public abstract class Scene {
         }
     }
 
+
+    public GameObject getActiveGameObject() {
+        return activeGameObject;
+    }
+
+    public void setActiveGameObject(GameObject activeGameObject) {
+        this.activeGameObject = activeGameObject;
+    }
 }

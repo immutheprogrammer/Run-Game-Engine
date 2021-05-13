@@ -8,34 +8,33 @@
         "properties": {
           "colour": {
             "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
+            "y": 0.99999,
+            "z": 0.99999,
             "w": 1.0
           },
           "sprite": {
             "width": 16.0,
             "height": 16.0,
             "texture": {
-              "filepath": "assets/images/spritesheet.png",
-              "texID": 1,
+              "filepath": "Generated",
               "width": 224,
               "height": 32
             },
             "texCoords": [
               {
-                "x": 0.85714287,
+                "x": 0.21428572,
                 "y": 1.0
               },
               {
-                "x": 0.85714287,
+                "x": 0.21428572,
                 "y": 0.5
               },
               {
-                "x": 0.78571427,
+                "x": 0.14285715,
                 "y": 0.5
               },
               {
-                "x": 0.78571427,
+                "x": 0.14285715,
                 "y": 1.0
               }
             ]
@@ -46,8 +45,8 @@
     ],
     "transform": {
       "position": {
-        "x": 672.0,
-        "y": 352.0
+        "x": 544.0,
+        "y": 448.0
       },
       "scale": {
         "x": 32.0,
