@@ -17,7 +17,7 @@ public class Texture {
     private int width, height;
 
     public Texture(int width, int height) {
-        this.filepath = filepath;
+        this.filepath = "Generated";
 
         // Generate the texture on GPU
         texID = glGenTextures();
@@ -36,7 +36,7 @@ public class Texture {
 
     public void init(String filepath) {
 
-        this.filepath = "Generated";
+        this.filepath = filepath;
 
         // Generate the texture
         texID = glGenTextures();
