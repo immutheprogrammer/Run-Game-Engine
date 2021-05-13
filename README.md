@@ -6,6 +6,8 @@ its pretty simple just run the main file and make sure you can use .gradle files
 
 if you find any issues please report them into the issues section.
 
+I encourage you to go and mess with the source code and maybe even learn something.
+
 **Some of The Features:**
 
 the run game engine has a batch renderer for faster render times,
