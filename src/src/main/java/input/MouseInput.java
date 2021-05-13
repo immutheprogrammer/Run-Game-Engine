@@ -6,14 +6,14 @@ import run.Window;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
-public class MouseListener {
-    private static MouseListener instance;
+public class MouseInput {
+    private static MouseInput instance;
     private double scrollX, scrollY;
     private double xPos, yPos, lastX, lastY;
-    private boolean mouseButtonsPressed[] = new boolean[9];
+    private final boolean[] mouseButtonsPressed = new boolean[9];
     private boolean isDragging;
 
-    private MouseListener() {
+    private MouseInput() {
         this.scrollX = 0.0;
         this.scrollY = 0.0;
         this.xPos = 0.0;
@@ -22,9 +22,9 @@ public class MouseListener {
         this.lastY = 0.0;
     }
 
-    public static MouseListener get() {
-        if (MouseListener.instance == null) {
-            MouseListener.instance = new MouseListener();
+    public static MouseInput get() {
+        if (MouseInput.instance == null) {
+            MouseInput.instance = new MouseInput();
         }
 
         return instance;
@@ -55,6 +55,18 @@ public class MouseListener {
     public static void mouseScrollCallback(long window, double xOffset, double yOffset) {
         get().scrollX = xOffset;
         get().scrollY = yOffset;
+
+        // Broken zooming code
+        /*
+
+        if (Window.getScene().camera().getProjectionSize().x < 1)
+            Window.getScene().camera().getProjectionSize().x = 1;
+        else if (Window.getScene().camera().getProjectionSize().y < 1)
+            Window.getScene().camera().getProjectionSize().y = 1;
+        if (Window.getScene().camera().getProjectionSize().x > 1919)
+        Window.getScene().camera().getProjectionSize().x += yOffset * 20;
+        Window.getScene().camera().getProjectionSize().y += yOffset * 20;
+        */
     }
 
     public static void endFrame() {
@@ -116,17 +128,11 @@ public class MouseListener {
         return get().isDragging;
     }
 
-    public static boolean isButtonDown(int button) {
-        if (button < get().mouseButtonsPressed.length)
-            return get().mouseButtonsPressed[button];
-        else
-            return false;
-    }
-
 
     public static boolean mouseButtonDown(int button) {
         return get().mouseButtonsPressed[button];
     }
+
 
     public static double getLastX() {
         return get().lastX;

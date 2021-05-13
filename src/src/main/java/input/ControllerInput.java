@@ -5,7 +5,7 @@ import java.nio.FloatBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class ControllerListener {
+public class ControllerInput {
 
     private static boolean presentState;
     private static FloatBuffer axes;

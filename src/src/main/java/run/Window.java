@@ -4,8 +4,8 @@ package run;
 import imgui.ImGui;
 import imgui.ImGuiLayer;
 import imgui.flag.ImGuiConfigFlags;
-import input.KeyListener;
-import input.MouseListener;
+import input.KeyInput;
+import input.MouseInput;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -92,10 +92,10 @@ public class Window {
         }
 
         // Sets the mouse callbacks
-        glfwSetCursorPosCallback(window, MouseListener::mousePositionCallback);
-        glfwSetMouseButtonCallback(window, MouseListener::mouseButtonCallback);
-        glfwSetScrollCallback(window, MouseListener::mouseScrollCallback);
-        glfwSetKeyCallback(window, KeyListener::keyCallback);
+        glfwSetCursorPosCallback(window, MouseInput::mousePositionCallback);
+        glfwSetMouseButtonCallback(window, MouseInput::mouseButtonCallback);
+        glfwSetScrollCallback(window, MouseInput::mouseScrollCallback);
+        glfwSetKeyCallback(window, KeyInput::keyCallback);
         glfwSetWindowSizeCallback(window, (w, newWidth, newHeight) -> {
             Window.setWidth(newWidth);
             Window.setHeight(newHeight);
@@ -162,6 +162,8 @@ public class Window {
                 DebugDraw.draw();
                 currentScene.update(dt);
             }
+            // Broken camera zooming code
+            // getScene().camera().adjustProjection();
 
             // Can't get multi-view port support working :(
             if (ImGui.getIO().hasConfigFlags(ImGuiConfigFlags.ViewportsEnable)) {

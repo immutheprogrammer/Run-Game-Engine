@@ -1,14 +1,17 @@
 package run;
 
+import input.MouseInput;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import util.JMath;
 
 public class Camera {
     private Matrix4f projectionMatrix, viewMatrix, inverseProjectMatrix, inverseViewMatrix;
     public Vector2f position;
 
-    private Vector2f projectionSize = new Vector2f(1920f, 1080f);
+    private Vector2f projectionSize = new Vector2f(1280f, 720f);
+
 
     public Camera(Vector2f position) {
         this.position = position;
@@ -38,6 +41,24 @@ public class Camera {
         return this.viewMatrix;
     }
 
+    public void panCamera() {
+        if (MouseInput.isDragging()) {
+            if (MouseInput.getX() < (MouseInput.getLastX() + 4)) {
+                this.position.x = JMath.lerp(position.x, position.x + 10.0f, 1.0f);
+            }
+            if (MouseInput.getX() > (MouseInput.getLastX() - 4)) {
+                this.position.x = JMath.lerp(position.x, position.x - 10.0f, 1.0f);
+            }
+            if (MouseInput.getY() < (MouseInput.getLastY() - 4)) {
+                this.position.y = JMath.lerp(position.y, position.y - 10.0f, 1.0f);
+            }
+            if (MouseInput.getY() > (MouseInput.getLastY() + 4)) {
+                this.position.y = JMath.lerp(position.y , position.y + 10.0f, 1.0f);
+            }
+        }
+    }
+
+
     public Matrix4f getProjectionMatrix() {
         return this.projectionMatrix;
     }
@@ -53,4 +74,5 @@ public class Camera {
     public Vector2f getProjectionSize() {
         return projectionSize;
     }
+
 }

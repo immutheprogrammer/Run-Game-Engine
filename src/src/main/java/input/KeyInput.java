@@ -1,22 +1,23 @@
 package input;
 
+
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
-public class KeyListener {
-    private static KeyListener instance;
+public class KeyInput {
+    private static KeyInput instance;
     private boolean keyPressed[] = new boolean[350];
 
-    private KeyListener() {
+    private KeyInput() {
 
     }
 
-    private static KeyListener get() {
-        if (KeyListener.instance == null) {
-            KeyListener.instance = new KeyListener();
+    private static KeyInput get() {
+        if (KeyInput.instance == null) {
+            KeyInput.instance = new KeyInput();
         }
 
-        return KeyListener.instance;
+        return KeyInput.instance;
     }
 
     public static void keyCallback(long window, int key, int scancode, int action, int mods) {

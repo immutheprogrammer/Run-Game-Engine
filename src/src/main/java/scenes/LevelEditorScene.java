@@ -7,7 +7,6 @@ import components.SpriteSheet;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.type.ImBoolean;
-import input.MouseListener;
 import org.joml.Vector2f;
 import run.Camera;
 import run.GameObject;
@@ -26,9 +25,7 @@ public class LevelEditorScene extends Scene {
     private ImBoolean showWireFrame = new ImBoolean(false);
     private float deltaTime;
 
-    static Vector2f cameraStartingPosition;
-
-    GameObject levelEditorStuff = new GameObject("LevelEditor", new Transform(new Vector2f()), 0);
+    GameObject levelEditor = new GameObject("LevelEditor", new Transform(new Vector2f()), 0);
 
     public LevelEditorScene() {
 
@@ -37,13 +34,11 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
-        levelEditorStuff.addComponent(new MouseControls());
-        levelEditorStuff.addComponent(new GridLines());
+        levelEditor.addComponent(new MouseControls());
+        levelEditor.addComponent(new GridLines());
 
         loadResources();
         this.camera = new Camera(new Vector2f(0f, 0f));
-
-        cameraStartingPosition = camera().position;
         if (loadedFile) {
             this.activeGameObject = gameObjects.get(0);
             return;
@@ -70,25 +65,12 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
-        levelEditorStuff.update(dt);
+        levelEditor.update(dt);
 
         deltaTime = dt;
 
-        // I know this panning system is bad but im not really working on it right now
-        if (MouseListener.isDragging()) {
-            if (MouseListener.getX() < (MouseListener.getLastX() + 5)) {
-                   camera.position.x += 10;
-            }
-            if (MouseListener.getX() > (MouseListener.getLastX() - 5)) {
-                camera.position.x -= 10;
-            }
-            if (MouseListener.getY() < (MouseListener.getLastY() - 5)) {
-                camera.position.y -= 10;
-            }
-            if (MouseListener.getY() > (MouseListener.getLastY() + 5)) {
-                camera.position.y += 10;
-            }
-        }
+        camera.panCamera();
+
 
         for (GameObject go : this.gameObjects) {
             go.update(dt);
@@ -132,7 +114,7 @@ public class LevelEditorScene extends Scene {
             ImGui.pushID(i);
             if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
                 GameObject object = Prefabs.generateSpriteObject(sprite, Settings.GRID_WIDTH, Settings.GRID_HEIGHT);
-                levelEditorStuff.getComponent(MouseControls.class).pickUpObject(object);
+                levelEditor.getComponent(MouseControls.class).pickUpObject(object);
             }
             ImGui.popID();
 
@@ -148,9 +130,5 @@ public class LevelEditorScene extends Scene {
 
         ImGui.end();
 
-    }
-
-    public static Vector2f getCameraStartingPosition() {
-        return cameraStartingPosition;
     }
 }

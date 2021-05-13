@@ -17,6 +17,7 @@ public class GridLines extends Component {
         int firstX = (int) (cameraPos.x / Settings.GRID_WIDTH - 1) * Settings.GRID_WIDTH;
         int firstY = (int) (cameraPos.y / Settings.GRID_HEIGHT - 1) * Settings.GRID_HEIGHT;
 
+
         int numVtLines = (int) (projectionSize.x / Settings.GRID_WIDTH) + 2;
         int numHzLines = (int) (projectionSize.y / Settings.GRID_HEIGHT) + 2;
 
@@ -37,5 +38,6 @@ public class GridLines extends Component {
                 DebugDraw.addLine2D(new Vector2f(firstX, y), new Vector2f(firstX + width, y), colour);
             }
         }
+
     }
 }

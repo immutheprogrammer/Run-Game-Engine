@@ -4,10 +4,10 @@ package scenes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import components.Component;
+import components.ComponentDeserializer;
 import imgui.ImGui;
 import renderer.Renderer;
 import run.Camera;
-import components.ComponentDeserializer;
 import run.GameObject;
 import run.GameObjectDeserializer;
 
@@ -84,7 +84,7 @@ public abstract class Scene {
                 .create();
 
         try {
-            FileWriter writer = new FileWriter("level.json");
+            FileWriter writer = new FileWriter("level1.RLevel");
             writer.write(gson.toJson(this.gameObjects));
             writer.close();
         } catch(IOException e) {
@@ -101,9 +101,9 @@ public abstract class Scene {
 
         String inFile = "";
         try {
-            inFile = new String(Files.readAllBytes(Paths.get("level.json")));
+            inFile = new String(Files.readAllBytes(Paths.get("level1.RLevel")));
             if (inFile.isEmpty()) {
-                File file = new File("level.json");
+                File file = new File("level1.RLevel");
             }
         } catch (IOException e) {
             e.printStackTrace();

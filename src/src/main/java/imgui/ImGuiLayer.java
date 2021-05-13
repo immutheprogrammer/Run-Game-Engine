@@ -7,8 +7,8 @@ import imgui.flag.ImGuiConfigFlags;
 import imgui.flag.ImGuiKey;
 import imgui.flag.ImGuiMouseCursor;
 import imgui.gl3.ImGuiImplGl3;
-import input.KeyListener;
-import input.MouseListener;
+import input.KeyInput;
+import input.MouseInput;
 import run.Window;
 import scenes.Scene;
 
@@ -104,7 +104,7 @@ public class ImGuiLayer {
             io.setKeySuper(io.getKeysDown(GLFW_KEY_LEFT_SUPER) || io.getKeysDown(GLFW_KEY_RIGHT_SUPER));
 
             if (!io.getWantCaptureKeyboard()) {
-                KeyListener.keyCallback(w, key, scancode, action, mods);
+                KeyInput.keyCallback(w, key, scancode, action, mods);
             }
         });
 
@@ -130,7 +130,7 @@ public class ImGuiLayer {
             }
 
             if (!io.getWantCaptureMouse()) {
-                MouseListener.mouseButtonCallback(w, button, action, mods);
+                MouseInput.mouseButtonCallback(w, button, action, mods);
             }
         });
 
@@ -138,6 +138,10 @@ public class ImGuiLayer {
             io.setMouseWheelH(io.getMouseWheelH() + (float) xOffset);
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
 
+
+            if (!io.getWantCaptureMouse()) {
+                MouseInput.mouseScrollCallback(w, xOffset, yOffset);
+            }
         });
 
         io.setSetClipboardTextFn(new ImStrConsumer() {

@@ -36,7 +36,11 @@ if (OS.isMacintosh())
 
 
 dependencies {
-    implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+
+    // -------------------------------------------
+
+    // Junit
+    testImplementation("junit:junit:4.13")
 
     // -------------------------------------------
 
@@ -55,6 +59,7 @@ dependencies {
     // -------------------------------------------
 
     // LWJGL
+    implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
     implementation "org.lwjgl:lwjgl"
     implementation "org.lwjgl:lwjgl-assimp"
     implementation "org.lwjgl:lwjgl-bgfx"
@@ -79,13 +84,3 @@ dependencies {
     implementation "org.joml:joml:${jomlVersion}"
 }
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'Main'
-    }
-    from {
-        configurations.compile.collect {
-            it.isDirectory()? it: zipTree(it)
-        }
-    }
-}

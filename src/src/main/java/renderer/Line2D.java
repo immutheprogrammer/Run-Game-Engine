@@ -7,18 +7,23 @@ public class Line2D {
     private Vector2f start;
     private Vector2f end;
     private Vector3f colour;
-    private int lifeTime;
+    private int lifeTimeInFrames;
+
+    public Line2D(Vector2f start, Vector2f end) {
+        this.start = start;
+        this.end = end;
+    }
 
     public Line2D(Vector2f start, Vector2f end, Vector3f colour, int lifeTimeInFrames) {
         this.start = start;
         this.end = end;
         this.colour = colour;
-        this.lifeTime = lifeTimeInFrames;
+        this.lifeTimeInFrames = lifeTimeInFrames;
     }
 
     public int beginFrame() {
-        this.lifeTime--;
-        return this.lifeTime;
+        this.lifeTimeInFrames--;
+        return this.lifeTimeInFrames;
     }
 
     public Vector2f getStart() {
