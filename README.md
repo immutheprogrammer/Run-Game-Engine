@@ -22,7 +22,11 @@ and is has a grid system.
 
 The engine may have a simple 3D render made with the Vulkan rendering api (which might give me the biggest headache ever) so if you want to make a 3D game, you can.
 
-particle system
+particle system.
+
+lighting.
+
+if you have more ideas add me on discord and send me a message at Immanuel#3564.
 
 im still brainstorming ideas for some more features...
 
