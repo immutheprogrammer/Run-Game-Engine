@@ -1,5 +1,6 @@
 package run;
 
+import editor.GameViewWindow;
 import input.MouseInput;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -42,18 +43,18 @@ public class Camera {
     }
 
     public void panCamera() {
-        if (MouseInput.isDragging()) {
+        if (MouseInput.isDragging() && GameViewWindow.getWantCaptureMouse()) {
             if (MouseInput.getX() < (MouseInput.getLastX() + 4)) {
-                this.position.x = JMath.lerp(position.x, position.x + 10.0f, 1.0f);
+                this.position.x = JMath.lerp(position.x, position.x + 15.0f, 1.0f);
             }
             if (MouseInput.getX() > (MouseInput.getLastX() - 4)) {
-                this.position.x = JMath.lerp(position.x, position.x - 10.0f, 1.0f);
+                this.position.x = JMath.lerp(position.x, position.x - 15.0f, 1.0f);
             }
             if (MouseInput.getY() < (MouseInput.getLastY() - 4)) {
-                this.position.y = JMath.lerp(position.y, position.y - 10.0f, 1.0f);
+                this.position.y = JMath.lerp(position.y, position.y - 15.0f, 1.0f);
             }
             if (MouseInput.getY() > (MouseInput.getLastY() + 4)) {
-                this.position.y = JMath.lerp(position.y , position.y + 10.0f, 1.0f);
+                this.position.y = JMath.lerp(position.y , position.y + 15.0f, 1.0f);
             }
         }
     }

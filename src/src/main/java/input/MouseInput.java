@@ -80,6 +80,18 @@ public class MouseInput {
         return (float)get().yPos;
     }
 
+    public static float getScreenX() {
+        float currentX = getX() - get().gameViewportPos.x;
+        currentX = (currentX / get().gameViewportSize.x) * Window.getWidth();
+        return currentX;
+    }
+
+    public static float getScreenY() {
+        float currentY = getY() - get().gameViewportPos.y;
+        currentY = Window.getHeight() - ((currentY / get().gameViewportSize.y) * Window.getHeight());
+        return currentY;
+    }
+
     public static float getOrthoX() {
         float currentX = getX() - get().gameViewportPos.x;
         currentX = (currentX / get().gameViewportSize.x) * 2.0f - 1.0f;

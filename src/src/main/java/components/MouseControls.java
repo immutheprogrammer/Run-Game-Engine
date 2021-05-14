@@ -32,6 +32,8 @@ public class MouseControls extends Component {
             if (MouseInput.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
                 place();
             }
+
+
         }
     }
 
