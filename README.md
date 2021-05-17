@@ -1,7 +1,4 @@
 # Run-Game-Engine
-
-**(IMPORTANT UPDATE)** THE JAVA RUN GAME ENGINE IS NO LONGER IN DEVOLPMENT THE PROJECT IS BEING MOVED TO C++ CHECK OUT MY REPOS FOR RUN-CPP.
-
 How to build on all platforms:
 
 its pretty simple just run the main file and make sure you can use .gradle files. 
