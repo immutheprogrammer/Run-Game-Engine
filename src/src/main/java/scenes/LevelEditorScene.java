@@ -36,13 +36,6 @@ public class LevelEditorScene extends Scene {
 
         loadResources();
         this.camera = new Camera(new Vector2f(0f, 0f));
-        if (loadedFile) {
-            if (gameObjects.size() > 0) {
-                this.activeGameObject = gameObjects.get(0);
-            }
-            return;
-        }
-
     }
 
     private void loadResources() {

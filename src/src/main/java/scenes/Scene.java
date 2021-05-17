@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import components.Component;
 import components.ComponentDeserializer;
-import imgui.ImGui;
 import renderer.Renderer;
 import run.Camera;
 import run.GameObject;
@@ -18,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class Scene {
 
@@ -25,8 +25,6 @@ public abstract class Scene {
     protected Camera camera;
     private boolean isRunning = false;
     protected List<GameObject> gameObjects = new ArrayList<>();
-
-    protected GameObject activeGameObject = null;
 
     protected boolean loadedFile = false;
     public Scene() {
@@ -57,21 +55,16 @@ public abstract class Scene {
         }
     }
 
+    public GameObject getGameObject(int gameObjectID) {
+        Optional<GameObject> result = this.gameObjects.stream().filter(gameObject -> gameObject.getUID() == gameObjectID).findFirst();
+        return result.orElse(null);
+    }
+
     public abstract void update(float dt);
     public abstract void render();
 
     public Camera camera() {
         return this.camera;
-    }
-
-    public void sceneImgui() {
-        if (activeGameObject != null) {
-            ImGui.begin("Inspector");
-            activeGameObject.imgui();
-            ImGui.end();
-        }
-
-        imgui();
     }
 
     public void imgui() {
@@ -134,14 +127,5 @@ public abstract class Scene {
             Component.init(maxCompID);
             this.loadedFile = true;
         }
-    }
-
-
-    public GameObject getActiveGameObject() {
-        return activeGameObject;
-    }
-
-    public void setActiveGameObject(GameObject activeGameObject) {
-        this.activeGameObject = activeGameObject;
     }
 }

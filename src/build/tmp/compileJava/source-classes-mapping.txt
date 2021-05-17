@@ -18,10 +18,10 @@ renderer/Renderer.java
  renderer.Renderer
 physics2d/primitives/Ray2D.java
  physics2d.primitives.Ray2D
-physics2d/primitives/Box2D.java
- physics2d.primitives.Box2D
 components/Sprite.java
  components.Sprite
+physics2d/primitives/Box2D.java
+ physics2d.primitives.Box2D
 physics2d/forces/ForceRegistry.java
  physics2d.forces.ForceRegistry
 renderer/Shader.java
@@ -61,6 +61,8 @@ physics2d/primitives/RaycastResult.java
  physics2d.primitives.RaycastResult
 util/JMath.java
  util.JMath
+editor/PropertiesWindow.java
+ editor.PropertiesWindow
 editor/GameViewWindow.java
  editor.GameViewWindow
 components/GridLines.java

@@ -2,6 +2,7 @@ package run;
 
 import components.Component;
 import imgui.ImGui;
+import physics2d.primitives.Box2D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class GameObject {
     private List<Component> components;
     public Transform transform;
 
+    public Box2D box2D;
 
     private int zIndex;
 
@@ -22,7 +24,6 @@ public class GameObject {
         this.components = new ArrayList<>();
         this.transform = transform;
         this.zIndex = zIndex;
-
         this.uid = ID_COUNTER++;
     }
 
@@ -63,8 +64,6 @@ public class GameObject {
         for (int i = 0; i < components.size(); i++) {
             components.get(i).update(dt);
         }
-
-
     }
 
     public void start() {

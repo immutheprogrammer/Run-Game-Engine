@@ -1,6 +1,6 @@
 package run;
 
-import editor.GameViewWindow;
+import imgui.ImGuiLayer;
 import input.MouseInput;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -43,7 +43,7 @@ public class Camera {
     }
 
     public void panCamera() {
-        if (MouseInput.isDragging() && GameViewWindow.getWantCaptureMouse()) {
+        if (MouseInput.isDragging() && ImGuiLayer.getGameViewWindow().getWantCaptureMouse()) {
             if (MouseInput.getX() < (MouseInput.getLastX() + 4)) {
                 this.position.x = JMath.lerp(position.x, position.x + 15.0f, 1.0f);
             }

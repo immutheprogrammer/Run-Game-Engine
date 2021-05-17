@@ -132,12 +132,12 @@ public class Window {
 
         Window.changeScene(0);
 
-        this.imGuiLayer = new ImGuiLayer(window);
-        this.imGuiLayer.initImGui();
 
-        this.frameBuffer = new FrameBuffer(Window.getWidth(), Window.getHeight());
-        this.pickingTexture = new PickingTexture(Window.getWidth(), Window.getHeight());
-        glViewport(0, 0, Window.getWidth(), Window.getHeight());
+        this.frameBuffer = new FrameBuffer(1920, 1080);
+        this.pickingTexture = new PickingTexture(1920, 1080);
+        this.imGuiLayer = new ImGuiLayer(window, pickingTexture);
+        this.imGuiLayer.initImGui();
+        glViewport(0, 0, 1920, 1080);
     }
 
     public void run() {
@@ -162,7 +162,7 @@ public class Window {
         float dt = -1.0f;
 
         Shader defaultShader = AssetPool.getShader("assets/shaders/default.glsl");
-        Shader pickingShader = AssetPool.getShader("assets/shaders/default.glsl");
+        Shader pickingShader = AssetPool.getShader("assets/shaders/pickingShader.glsl");
 
         while (!glfwWindowShouldClose(window)) {
             // Poll events
@@ -179,16 +179,9 @@ public class Window {
             Renderer.bindShader(pickingShader);
             currentScene.render();
 
-            if (MouseInput.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
-                int x = (int)MouseInput.getScreenX();
-                int y = (int)MouseInput.getScreenY();
-                System.out.println(pickingTexture.readPixel(x, y));
-            }
-
             pickingTexture.disableWriting();
             glEnable(GL_BLEND);
-
-
+            
             //Render pass 2. Render actual game
 
             DebugDraw.beginFrame();
