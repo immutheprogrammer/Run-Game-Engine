@@ -1,2 +1,0 @@
-physics2D/CollisionDetectorTests.java
- physics2D.CollisionDetectorTests
