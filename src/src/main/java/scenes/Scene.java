@@ -5,11 +5,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import components.Component;
 import components.ComponentDeserializer;
-import imgui.ImGui;
 import renderer.Renderer;
 import run.Camera;
 import run.GameObject;
 import run.GameObjectDeserializer;
+import run.Transform;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class Scene {
 
@@ -25,8 +26,6 @@ public abstract class Scene {
     protected Camera camera;
     private boolean isRunning = false;
     protected List<GameObject> gameObjects = new ArrayList<>();
-
-    protected GameObject activeGameObject = null;
 
     protected boolean loadedFile = false;
     public Scene() {
@@ -57,6 +56,11 @@ public abstract class Scene {
         }
     }
 
+    public GameObject getGameObject(int gameObjectID) {
+        Optional<GameObject> result = this.gameObjects.stream().filter(gameObject -> gameObject.getUID() == gameObjectID).findFirst();
+        return result.orElse(null);
+    }
+
     public abstract void update(float dt);
     public abstract void render();
 
@@ -64,18 +68,16 @@ public abstract class Scene {
         return this.camera;
     }
 
-    public void sceneImgui() {
-        if (activeGameObject != null) {
-            ImGui.begin("Inspector");
-            activeGameObject.imgui();
-            ImGui.end();
-        }
-
-        imgui();
-    }
-
     public void imgui() {
 
+    }
+
+    public GameObject createGameObject(String name) {
+        GameObject go = new GameObject(name);
+        go.addComponent(new Transform());
+        go.transform = go.getComponent(Transform.class);
+
+        return go;
     }
 
     public void saveExit() {
@@ -87,7 +89,14 @@ public abstract class Scene {
 
         try {
             FileWriter writer = new FileWriter("level1.RLevel");
-            writer.write(gson.toJson(this.gameObjects));
+            List<GameObject> objsToSerialize = new ArrayList<>();
+            for (GameObject obj : this.gameObjects){
+                if (obj.DoSerialization()) {
+                    objsToSerialize.add(obj);
+                }
+            }
+
+            writer.write(gson.toJson(objsToSerialize));
             writer.close();
         } catch(IOException e) {
             e.printStackTrace();
@@ -134,14 +143,5 @@ public abstract class Scene {
             Component.init(maxCompID);
             this.loadedFile = true;
         }
-    }
-
-
-    public GameObject getActiveGameObject() {
-        return activeGameObject;
-    }
-
-    public void setActiveGameObject(GameObject activeGameObject) {
-        this.activeGameObject = activeGameObject;
     }
 }

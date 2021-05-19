@@ -1,6 +1,7 @@
 package imgui;
 
 import editor.GameViewWindow;
+import editor.PropertiesWindow;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
 import imgui.flag.*;
@@ -8,6 +9,7 @@ import imgui.gl3.ImGuiImplGl3;
 import imgui.type.ImBoolean;
 import input.KeyInput;
 import input.MouseInput;
+import renderer.PickingTexture;
 import run.Window;
 import scenes.Scene;
 
@@ -24,9 +26,13 @@ public class ImGuiLayer {
 
     private final long window;
 
+    private static GameViewWindow gameViewWindow;
+    private PropertiesWindow propertiesWindow;
 
-    public ImGuiLayer(long window) {
+    public ImGuiLayer(long window, PickingTexture pickingTexture) {
         this.window = window;
+        this.gameViewWindow = new GameViewWindow();
+        this.propertiesWindow = new PropertiesWindow(pickingTexture);
     }
 
 
@@ -128,7 +134,7 @@ public class ImGuiLayer {
                 ImGui.setWindowFocus(null);
             }
 
-            if (!io.getWantCaptureMouse() || GameViewWindow.getWantCaptureMouse()) {
+            if (!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse()) {
                 MouseInput.mouseButtonCallback(w, button, action, mods);
             }
         });
@@ -136,11 +142,7 @@ public class ImGuiLayer {
         glfwSetScrollCallback(window, (w, xOffset, yOffset) -> {
             io.setMouseWheelH(io.getMouseWheelH() + (float) xOffset);
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
-
-
-            if (!io.getWantCaptureMouse()) {
-                MouseInput.mouseScrollCallback(w, xOffset, yOffset);
-            }
+            MouseInput.mouseScrollCallback(w, xOffset, yOffset);
         });
 
         io.setSetClipboardTextFn(new ImStrConsumer() {
@@ -192,8 +194,10 @@ public class ImGuiLayer {
         // Any Dear ImGui code SHOULD go between ImGui.newFrame()/ImGui.render() methods
         ImGui.newFrame();
         setupDockSpace();
-        currentScene.sceneImgui();
-        GameViewWindow.imgui();
+        currentScene.imgui();
+        gameViewWindow.imgui();
+        propertiesWindow.update(dt, currentScene);
+        propertiesWindow.imgui();
         ImGui.end();
         ImGui.render();
         endFrame();
@@ -254,5 +258,10 @@ public class ImGuiLayer {
         ImGui.popStyleColor(5);
 
         ImGui.dockSpace(ImGui.getID("Dockspace"));
+    }
+
+    public static GameViewWindow getGameViewWindow() { return gameViewWindow; }
+    public PropertiesWindow getPropertiesWindow() {
+        return this.propertiesWindow;
     }
 }

@@ -8,7 +8,6 @@ import org.joml.Vector2f;
 import run.Camera;
 import run.GameObject;
 import run.Prefabs;
-import run.Transform;
 import util.AssetPool;
 import util.Settings;
 
@@ -22,36 +21,43 @@ public class LevelEditorScene extends Scene {
     private ImBoolean showWireFrame = new ImBoolean(false);
     private float deltaTime;
 
-    GameObject levelEditor = new GameObject("LevelEditor", new Transform(new Vector2f()), 0);
+    GameObject levelEditor = this.createGameObject("LevelEditor");
 
     public LevelEditorScene() {
-
     }
 
 
     @Override
     public void init() {
+        loadResources();
+
+        SpriteSheet gizmos = AssetPool.getSpriteSheet("assets/images/gizmos.png");
+
+        this.camera = new Camera(new Vector2f(0f, 0f));
         levelEditor.addComponent(new MouseControls());
         levelEditor.addComponent(new GridLines());
+        levelEditor.addComponent(new EditorCamera(this.camera));
+        levelEditor.addComponent(new GizmoSystem(gizmos));
 
-        loadResources();
-        this.camera = new Camera(new Vector2f(0f, 0f));
-        if (loadedFile) {
-            if (gameObjects.size() > 0) {
-                this.activeGameObject = gameObjects.get(0);
-            }
-            return;
-        }
+        levelEditor.start();
 
     }
 
     private void loadResources() {
         AssetPool.getShader("assets/shaders/default.glsl");
+        AssetPool.getShader("assets/shaders/pickingShader.glsl");
+        AssetPool.getShader("assets/shaders/debugLine2D.glsl");
 
-        AssetPool.getSpriteSheet("assets/images/spritesheet.png",
+
+        AssetPool.addSpriteSheet("assets/images/gizmos.png",
+                new SpriteSheet(AssetPool.getTexture("assets/images/gizmos.png"),
+                        24, 48, 3, 0));
+
+        AssetPool.addSpriteSheet("assets/images/spritesheet.png",
                 new SpriteSheet(
                         AssetPool.getTexture("assets/images/spritesheet.png"),
                         16, 16, 26, 0));
+
 
         for (GameObject g : gameObjects) {
             if (g.getComponent(SpriteRenderer.class) != null) {
@@ -67,14 +73,12 @@ public class LevelEditorScene extends Scene {
     @Override
     public void update(float dt) {
         levelEditor.update(dt);
+        this.camera.adjustProjection();
 
         deltaTime = dt;
 
-        camera.panCamera();
-
         for (GameObject go : this.gameObjects) {
             go.update(dt);
-
         }
 }
     @Override
@@ -84,8 +88,12 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void imgui () {
+/*        ImGui.begin("Level Editor");
+        levelEditor.imgui();
+        ImGui.end()*/;
 
         ImGui.begin("Debug");
+
         ImGui.checkbox("Show Fps", printFPS);
         if (printFPS.get()) System.out.println("FPS: " + (int) (1.0f / deltaTime));
         ImGui.checkbox("Show WireFrame", showWireFrame);
@@ -95,9 +103,6 @@ public class LevelEditorScene extends Scene {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
 
-        if (ImGui.button("Reset Camera Position")) {
-            camera.position = new Vector2f();
-        }
         ImGui.end();
 
 
@@ -124,7 +129,6 @@ public class LevelEditorScene extends Scene {
                 levelEditor.getComponent(MouseControls.class).pickUpObject(object);
             }
             ImGui.popID();
-
             ImVec2 lastButtonPos = new ImVec2();
             ImGui.getItemRectMax(lastButtonPos);
             float lastButtonX2 = lastButtonPos.x;
