@@ -1,4 +1,4 @@
-package run;
+package components;
 
 import components.Component;
 import editor.JImGui;
@@ -7,10 +7,15 @@ import util.Settings;
 
 public class Transform extends Component {
 
+<<<<<<< Updated upstream:src/src/main/java/run/Transform.java
     public Vector2f position;
     public Vector2f scale;
     public float rotation = 0f;
     public int zIndex;
+=======
+    public Vector2f position = new Vector2f();
+    public Vector2f scale = new Vector2f();
+>>>>>>> Stashed changes:src/src/main/java/components/Transform.java
 
     public Transform() {
         init(new Vector2f(), new Vector2f());

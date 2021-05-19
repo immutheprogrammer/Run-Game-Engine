@@ -1,9 +1,14 @@
 package physics2dtmp.rigidbody;
 
 import components.Component;
+import components.Transform;
 import org.joml.Vector2f;
+<<<<<<< Updated upstream:src/src/main/java/physics2dtmp/rigidbody/Rigidbody2D.java
 import physics2dtmp.primitives.Collider2D;
 import run.Transform;
+=======
+import physics2d.primitives.Collider2D;
+>>>>>>> Stashed changes:src/src/main/java/physics2d/rigidbody/Rigidbody2D.java
 
 public class Rigidbody2D extends Component {
     private Transform rawTransform;

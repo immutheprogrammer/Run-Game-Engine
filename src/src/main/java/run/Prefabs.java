@@ -2,6 +2,11 @@ package run;
 
 import components.Sprite;
 import components.SpriteRenderer;
+<<<<<<< Updated upstream
+=======
+import components.Transform;
+import org.joml.Vector2f;
+>>>>>>> Stashed changes
 
 public class Prefabs {
 

@@ -4,7 +4,6 @@ package run;
 import imgui.ImGuiLayer;
 import input.KeyInput;
 import input.MouseInput;
-import org.cef.OS;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -96,12 +95,10 @@ public class Window {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
-        if (OS.isMacintosh()) {
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        }
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
         window = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
         if (window == NULL) {
@@ -148,11 +145,17 @@ public class Window {
 
         // Load image
 
+<<<<<<< Updated upstream
         try {
             AssetPool.setIcon("assets/images/Cover.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
+=======
+        this.frameBuffer = new FrameBuffer(1920, 1080);
+        this.pickingTexture = new PickingTexture(1920, 1080);
+        glViewport(0, 0, 1920, 1080);
+>>>>>>> Stashed changes
     }
 
     public void run() {

@@ -1,11 +1,14 @@
 package components;
 
+<<<<<<< Updated upstream
 
 import editor.JImGui;
+=======
+import imgui.ImGui;
+>>>>>>> Stashed changes
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import renderer.Texture;
-import run.Transform;
 
 
 public class SpriteRenderer extends Component {

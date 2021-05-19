@@ -2,6 +2,7 @@ package run;
 
 import com.google.gson.*;
 import components.Component;
+import components.Transform;
 
 import java.lang.reflect.Type;
 

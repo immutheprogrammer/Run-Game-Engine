@@ -98,13 +98,21 @@ public class MouseInput {
 
     public static float getScreenX() {
         float currentX = getX() - get().gameViewportPos.x;
+<<<<<<< Updated upstream
         currentX = (currentX / get().gameViewportSize.x) * 1920.0f;
+=======
+        currentX = (currentX / get().gameViewportSize.x) * 1920;
+>>>>>>> Stashed changes
         return currentX;
     }
 
     public static float getScreenY() {
         float currentY = getY() - get().gameViewportPos.y;
+<<<<<<< Updated upstream
         currentY = 1080.0f - ((currentY / get().gameViewportSize.y) * 1080.0f);
+=======
+        currentY = 1080 - ((currentY / get().gameViewportSize.y) * 1080);
+>>>>>>> Stashed changes
         return currentY;
     }
 

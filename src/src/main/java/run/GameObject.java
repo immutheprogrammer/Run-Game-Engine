@@ -1,7 +1,7 @@
 package run;
 
 import components.Component;
-import imgui.ImGui;
+import components.Transform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +68,13 @@ public class GameObject {
 
     public void imgui() {
         for (Component c : components) {
+<<<<<<< Updated upstream
             if (ImGui.collapsingHeader(c.getClass().getSimpleName())) {
                 c.imgui();
             }
+=======
+           c.imgui();
+>>>>>>> Stashed changes
         }
     }
 
