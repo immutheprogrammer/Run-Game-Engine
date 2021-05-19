@@ -6,6 +6,8 @@ public class Transform {
 
     public Vector2f position = new Vector2f();
     public Vector2f scale = new Vector2f();
+    public float rotation = 0.0f;
+    public int zIndex = 0;
 
     public Transform() {
         init(new Vector2f(), new Vector2f());
