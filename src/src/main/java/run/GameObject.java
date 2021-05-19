@@ -74,6 +74,9 @@ public class GameObject {
             }
 =======
            c.imgui();
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         }
     }

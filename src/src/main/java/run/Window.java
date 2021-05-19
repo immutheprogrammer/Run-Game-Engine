@@ -146,11 +146,17 @@ public class Window {
         // Load image
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         try {
             AssetPool.setIcon("assets/images/Cover.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
+=======
+        this.frameBuffer = new FrameBuffer(1920, 1080);
+        this.pickingTexture = new PickingTexture(1920, 1080);
+        glViewport(0, 0, 1920, 1080);
+>>>>>>> Stashed changes
 =======
         this.frameBuffer = new FrameBuffer(1920, 1080);
         this.pickingTexture = new PickingTexture(1920, 1080);

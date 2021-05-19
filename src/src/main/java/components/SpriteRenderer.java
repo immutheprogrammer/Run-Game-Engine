@@ -1,9 +1,12 @@
 package components;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 import editor.JImGui;
 =======
+=======
+>>>>>>> Stashed changes
 import imgui.ImGui;
 >>>>>>> Stashed changes
 import org.joml.Vector2f;
