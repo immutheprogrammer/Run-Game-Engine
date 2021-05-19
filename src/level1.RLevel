@@ -1,0 +1,126 @@
+[
+  {
+    "uid": 1,
+    "name": "Sprite_Object_Gen",
+    "components": [
+      {
+        "type": "run.Transform",
+        "properties": {
+          "position": {
+            "x": -62.5,
+            "y": 0.0
+          },
+          "scale": {
+            "x": 0.0,
+            "y": 64.0
+          },
+          "rotation": 0.0,
+          "zIndex": 0,
+          "uid": 20
+        }
+      },
+      {
+        "type": "components.SpriteRenderer",
+        "properties": {
+          "colour": {
+            "x": 1.0,
+            "y": 0.99999,
+            "z": 0.99999,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "assets/images/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "texCoords": [
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.0
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.0
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              }
+            ]
+          },
+          "uid": 21
+        }
+      }
+    ],
+    "doSerialization": true
+  },
+  {
+    "uid": 2,
+    "name": "Sprite_Object_Gen",
+    "components": [
+      {
+        "type": "run.Transform",
+        "properties": {
+          "position": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "scale": {
+            "x": 32.0,
+            "y": 32.0
+          },
+          "rotation": 0.0,
+          "zIndex": 0,
+          "uid": 40
+        }
+      },
+      {
+        "type": "components.SpriteRenderer",
+        "properties": {
+          "colour": {
+            "x": 1.0,
+            "y": 0.99999,
+            "z": 0.99999,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "assets/images/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "texCoords": [
+              {
+                "x": 0.85714287,
+                "y": 1.0
+              },
+              {
+                "x": 0.85714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.78571427,
+                "y": 0.5
+              },
+              {
+                "x": 0.78571427,
+                "y": 1.0
+              }
+            ]
+          },
+          "uid": 41
+        }
+      }
+    ],
+    "doSerialization": true
+  }
+]

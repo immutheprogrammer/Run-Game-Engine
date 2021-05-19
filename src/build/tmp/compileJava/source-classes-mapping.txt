@@ -1,13 +1,54 @@
-renderer/DebugDraw.java
- renderer.DebugDraw
-physics2d/primitives/Circle.java
- physics2d.primitives.Circle
-scenes/LevelScene.java
- scenes.LevelScene
+renderer/Texture.java
+ renderer.Texture
+physics2d/primitives/RaycastResult.java
+ physics2d.primitives.RaycastResult
+renderer/FrameBuffer.java
+ renderer.FrameBuffer
 util/Settings.java
  util.Settings
 util/Constants.java
  util.Constants
+util/JMath.java
+ util.JMath
+input/ControllerInput.java
+ input.ControllerInput
+renderer/PickingTexture.java
+ renderer.PickingTexture
+editor/GameViewWindow.java
+ editor.GameViewWindow
+physics2d/primitives/Ray2D.java
+ physics2d.primitives.Ray2D
+input/KeyInput.java
+ input.KeyInput
+input/MouseInput.java
+ input.MouseInput
+components/Sprite.java
+ components.Sprite
+physics2d/rigidbody/CollisionManifold.java
+ physics2d.rigidbody.CollisionManifold
+renderer/Shader.java
+ renderer.Shader
+util/AssetPool.java
+ util.AssetPool
+components/SpriteSheet.java
+ components.SpriteSheet
+renderer/Line2D.java
+ renderer.Line2D
+Main.java
+ Main
+renderer/DebugDraw.java
+ renderer.DebugDraw
+run/Camera.java
+ run.Camera
+scenes/LevelScene.java
+ scenes.LevelScene
+editor/JImGui.java
+ editor.JImGui
+physics2d/primitives/Circle.java
+ physics2d.primitives.Circle
+physics2d/rigidbody/Collisions.java
+ physics2d.rigidbody.Collisions
+ physics2d.rigidbody.Collisions$ProjectionResult
 physics2d/forces/ForceRegistration.java
  physics2d.forces.ForceRegistration
 components/MouseControls.java
@@ -16,28 +57,46 @@ physics2d/forces/ForceGenerator.java
  physics2d.forces.ForceGenerator
 renderer/Renderer.java
  renderer.Renderer
-physics2d/primitives/Ray2D.java
- physics2d.primitives.Ray2D
-components/Sprite.java
- components.Sprite
+components/TranslateGizmo.java
+ components.TranslateGizmo
+editor/PropertiesWindow.java
+ editor.PropertiesWindow
+components/GridLines.java
+ components.GridLines
+components/ScaleGizmo.java
+ components.ScaleGizmo
 physics2d/primitives/Box2D.java
  physics2d.primitives.Box2D
 physics2d/forces/ForceRegistry.java
  physics2d.forces.ForceRegistry
-renderer/Shader.java
- renderer.Shader
-util/AssetPool.java
- util.AssetPool
+physics2d/primitives/Collider2D.java
+ physics2d.primitives.Collider2D
+run/GameObject.java
+ run.GameObject
+scenes/LevelEditorScene.java
+ scenes.LevelEditorScene
+components/GizmoSystem.java
+ components.GizmoSystem
 scenes/Scene.java
  scenes.Scene
 physics2d/primitives/AABB.java
  physics2d.primitives.AABB
+components/NonPickable.java
+ components.NonPickable
 components/FontRenderer.java
  components.FontRenderer
+components/EditorCamera.java
+ components.EditorCamera
 components/SpriteRenderer.java
  components.SpriteRenderer
-input/ControllerInput.java
- input.ControllerInput
+run/Window.java
+ run.Window
+run/GameObjectDeserializer.java
+ run.GameObjectDeserializer
+run/Transform.java
+ run.Transform
+components/Component.java
+ components.Component
 physics2d/rigidbody/IntersectionDetector2D.java
  physics2d.rigidbody.IntersectionDetector2D
 renderer/RenderBatch.java
@@ -48,58 +107,13 @@ imgui/ImGuiLayer.java
  imgui.ImGuiLayer
  imgui.ImGuiLayer$1
  imgui.ImGuiLayer$2
-physics2d/forces/Gravity2D.java
- physics2d.forces.Gravity2D
-renderer/PickingTexture.java
- renderer.PickingTexture
-physics2d/rigidbody/Collisions.java
- physics2d.rigidbody.Collisions
- physics2d.rigidbody.Collisions$ProjectionResult
-run/Camera.java
- run.Camera
-physics2d/primitives/RaycastResult.java
- physics2d.primitives.RaycastResult
-util/JMath.java
- util.JMath
-editor/PropertiesWindow.java
- editor.PropertiesWindow
-editor/GameViewWindow.java
- editor.GameViewWindow
-components/GridLines.java
- components.GridLines
-Main.java
- Main
-renderer/Line2D.java
- renderer.Line2D
-physics2d/rigidbody/CollisionManifold.java
- physics2d.rigidbody.CollisionManifold
-physics2d/primitives/Collider2D.java
- physics2d.primitives.Collider2D
-run/GameObject.java
- run.GameObject
-renderer/FrameBuffer.java
- renderer.FrameBuffer
-scenes/LevelEditorScene.java
- scenes.LevelEditorScene
-input/KeyInput.java
- input.KeyInput
-run/Window.java
- run.Window
-run/GameObjectDeserializer.java
- run.GameObjectDeserializer
-run/Transform.java
- run.Transform
-components/Component.java
- components.Component
-input/MouseInput.java
- input.MouseInput
 physics2d/rigidbody/Rigidbody2D.java
  physics2d.rigidbody.Rigidbody2D
 run/Prefabs.java
  run.Prefabs
-components/SpriteSheet.java
- components.SpriteSheet
-renderer/Texture.java
- renderer.Texture
+components/Gizmo.java
+ components.Gizmo
+physics2d/forces/Gravity2D.java
+ physics2d.forces.Gravity2D
 components/ComponentDeserializer.java
  components.ComponentDeserializer

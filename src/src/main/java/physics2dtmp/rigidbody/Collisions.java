@@ -1,10 +1,10 @@
-package physics2d.rigidbody;
+package physics2dtmp.rigidbody;
 
 import org.joml.Vector2f;
-import physics2d.primitives.AABB;
-import physics2d.primitives.Box2D;
-import physics2d.primitives.Circle;
-import physics2d.primitives.Collider2D;
+import physics2dtmp.primitives.AABB;
+import physics2dtmp.primitives.Box2D;
+import physics2dtmp.primitives.Circle;
+import physics2dtmp.primitives.Collider2D;
 import util.JMath;
 
 public class Collisions {

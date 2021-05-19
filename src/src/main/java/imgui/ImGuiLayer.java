@@ -142,11 +142,7 @@ public class ImGuiLayer {
         glfwSetScrollCallback(window, (w, xOffset, yOffset) -> {
             io.setMouseWheelH(io.getMouseWheelH() + (float) xOffset);
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
-
-
-            if (!io.getWantCaptureMouse()) {
-                MouseInput.mouseScrollCallback(w, xOffset, yOffset);
-            }
+            MouseInput.mouseScrollCallback(w, xOffset, yOffset);
         });
 
         io.setSetClipboardTextFn(new ImStrConsumer() {
@@ -265,4 +261,7 @@ public class ImGuiLayer {
     }
 
     public static GameViewWindow getGameViewWindow() { return gameViewWindow; }
+    public PropertiesWindow getPropertiesWindow() {
+        return this.propertiesWindow;
+    }
 }

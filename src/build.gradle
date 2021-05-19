@@ -12,6 +12,9 @@ sourceCompatibility = 1.11
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs "libs"
+    }
 }
 
 dependencies {
@@ -37,6 +40,10 @@ if (OS.isMacintosh())
 
 
 dependencies {
+
+    // Box2D
+
+    implementation name: "jbox2d-library"
 
     // -------------------------------------------
 

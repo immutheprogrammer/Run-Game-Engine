@@ -1,12 +1,12 @@
-package physics2d;
+package physics2dtmp;
 
 import org.joml.Vector2f;
-import physics2d.forces.ForceRegistry;
-import physics2d.forces.Gravity2D;
-import physics2d.primitives.Collider2D;
-import physics2d.rigidbody.CollisionManifold;
-import physics2d.rigidbody.Collisions;
-import physics2d.rigidbody.Rigidbody2D;
+import physics2dtmp.forces.ForceRegistry;
+import physics2dtmp.forces.Gravity2D;
+import physics2dtmp.primitives.Collider2D;
+import physics2dtmp.rigidbody.CollisionManifold;
+import physics2dtmp.rigidbody.Collisions;
+import physics2dtmp.rigidbody.Rigidbody2D;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,6 @@
 package components;
 
+import editor.JImGui;
 import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -44,30 +45,20 @@ public abstract class Component {
                 if (type == int.class) {
                     int val = (int)value;
                     int[] imInt = {val};
-                    if (ImGui.dragInt(name + ": ", imInt)) {
-                        field.set(this, imInt[0]);
-                    }
+                    JImGui.dragInt(name, imInt[0]);
                 }
                 else if (type == float.class) {
                     float val = (float)value;
                     float[] imFloat = {val};
-                    if (ImGui.dragFloat(name + ": ", imFloat)) {
-                        field.set(this, imFloat[0]);
-                    }
+                    JImGui.dragFloat(name, imFloat[0]);
                 }
                 else if (type == Vector3f.class) {
                     Vector3f val = (Vector3f) value;
-                    float[] imVec = {val.x, val.y, val.z};
-                    if (ImGui.dragFloat3(name + ": ", imVec)) {
-                        val.set(imVec[0], imVec[1], imVec[2]);
-                    }
+                    JImGui.drawVec3Control(name, val);
                 }
                 else if (type == Vector2f.class) {
                     Vector2f val = (Vector2f) value;
-                    float[] imVec = {val.x, val.y};
-                    if (ImGui.dragFloat2(name + ": ", imVec)) {
-                        val.set(imVec[0], imVec[1]);
-                    }
+                    JImGui.drawVec2Control(name, val);
                 }
                 else if (type == Vector4f.class) {
                     Vector4f val = (Vector4f) value;

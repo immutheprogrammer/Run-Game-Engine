@@ -13,7 +13,7 @@ import java.util.List;
 import static org.lwjgl.opengl.GL40.*;
 
 public class DebugDraw {
-    private static int MAX_LINES = 1000;
+    private static int MAX_LINES = 10000;
 
     private static List<Line2D> lines = new ArrayList<>();
     // 6 floats per vertex, 2 vertices per line
@@ -42,7 +42,7 @@ public class DebugDraw {
         glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * Float.BYTES, 3 * Float.BYTES);
         glEnableVertexAttribArray(1);
 
-        glLineWidth(2.0f);
+        glLineWidth(1.0f);
     }
 
     public static void beginFrame() {

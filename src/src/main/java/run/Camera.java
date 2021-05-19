@@ -1,18 +1,15 @@
 package run;
 
-import imgui.ImGuiLayer;
-import input.MouseInput;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import util.JMath;
 
 public class Camera {
     private Matrix4f projectionMatrix, viewMatrix, inverseProjectMatrix, inverseViewMatrix;
     public Vector2f position;
-
     private Vector2f projectionSize = new Vector2f(1280f, 720f);
 
+    private float zoom = 1.0f;
 
     public Camera(Vector2f position) {
         this.position = position;
@@ -25,7 +22,7 @@ public class Camera {
 
     public void adjustProjection() {
         this.projectionMatrix.identity();
-        this.projectionMatrix.ortho(0.0f, projectionSize.x, 0.0f, projectionSize.y, 0.0f, 100.0f);
+        this.projectionMatrix.ortho(0.0f, projectionSize.x * this.zoom, 0.0f, projectionSize.y * this.zoom, 0.0f, 100.0f);
         this.projectionMatrix.invert(inverseProjectMatrix);
     }
 
@@ -40,23 +37,6 @@ public class Camera {
         this.viewMatrix.invert(inverseViewMatrix);
 
         return this.viewMatrix;
-    }
-
-    public void panCamera() {
-        if (MouseInput.isDragging() && ImGuiLayer.getGameViewWindow().getWantCaptureMouse()) {
-            if (MouseInput.getX() < (MouseInput.getLastX() + 4)) {
-                this.position.x = JMath.lerp(position.x, position.x + 15.0f, 1.0f);
-            }
-            if (MouseInput.getX() > (MouseInput.getLastX() - 4)) {
-                this.position.x = JMath.lerp(position.x, position.x - 15.0f, 1.0f);
-            }
-            if (MouseInput.getY() < (MouseInput.getLastY() - 4)) {
-                this.position.y = JMath.lerp(position.y, position.y - 15.0f, 1.0f);
-            }
-            if (MouseInput.getY() > (MouseInput.getLastY() + 4)) {
-                this.position.y = JMath.lerp(position.y , position.y + 15.0f, 1.0f);
-            }
-        }
     }
 
 
@@ -76,4 +56,15 @@ public class Camera {
         return projectionSize;
     }
 
+    public float getZoom() {
+        return zoom;
+    }
+
+    public void setZoom(float zoom) {
+        this.zoom = zoom;
+    }
+
+    public void addZoom(float value) {
+        this.zoom += value;
+    }
 }

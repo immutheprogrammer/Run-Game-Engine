@@ -1,8 +1,8 @@
-package physics2d.rigidbody;
+package physics2dtmp.rigidbody;
 
 import components.Component;
 import org.joml.Vector2f;
-import physics2d.primitives.Collider2D;
+import physics2dtmp.primitives.Collider2D;
 import run.Transform;
 
 public class Rigidbody2D extends Component {

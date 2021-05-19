@@ -43,6 +43,8 @@ public class Window {
         this.width = 1280;
         this.height = 720;
         this.title = "Run Engine Tests";
+
+
     }
 
     public static void changeScene(int newScene) {
@@ -57,6 +59,7 @@ public class Window {
                 assert false : "Unknown Scene " + newScene;
                 break;
         }
+
 
         currentScene.load();
         currentScene.init();
@@ -73,6 +76,10 @@ public class Window {
 
     public static Scene getScene() {
         return get().currentScene;
+    }
+
+    public static long getWindow() {
+        return get().window;
     }
 
     private void init() {
@@ -130,14 +137,22 @@ public class Window {
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-        Window.changeScene(0);
-
-
         this.frameBuffer = new FrameBuffer(1920, 1080);
         this.pickingTexture = new PickingTexture(1920, 1080);
-        this.imGuiLayer = new ImGuiLayer(window, pickingTexture);
+        this.imGuiLayer = new ImGuiLayer(this.window, this.pickingTexture);
         this.imGuiLayer.initImGui();
+
         glViewport(0, 0, 1920, 1080);
+
+        Window.changeScene(0);
+
+        // Load image
+
+        try {
+            AssetPool.setIcon("assets/images/Cover.png");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void run() {
@@ -211,6 +226,7 @@ public class Window {
             }*/
             this.imGuiLayer.update(dt, currentScene);
             glfwSwapBuffers(window);
+            MouseInput.endFrame();
 
             endTime = (float) glfwGetTime();
             dt = endTime - beginTime;
@@ -219,6 +235,7 @@ public class Window {
         }
         currentScene.saveExit();
     }
+
 
     public static int getWidth() {
         return get().width;
@@ -242,5 +259,9 @@ public class Window {
 
     public static float getTargetAspectRation() {
         return 16.0f / 9.0f;
+    }
+
+    public static ImGuiLayer getImGuiLayer() {
+        return get().imGuiLayer;
     }
 }

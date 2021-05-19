@@ -9,6 +9,7 @@ import renderer.Renderer;
 import run.Camera;
 import run.GameObject;
 import run.GameObjectDeserializer;
+import run.Transform;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -71,6 +72,14 @@ public abstract class Scene {
 
     }
 
+    public GameObject createGameObject(String name) {
+        GameObject go = new GameObject(name);
+        go.addComponent(new Transform());
+        go.transform = go.getComponent(Transform.class);
+
+        return go;
+    }
+
     public void saveExit() {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -80,7 +89,14 @@ public abstract class Scene {
 
         try {
             FileWriter writer = new FileWriter("level1.RLevel");
-            writer.write(gson.toJson(this.gameObjects));
+            List<GameObject> objsToSerialize = new ArrayList<>();
+            for (GameObject obj : this.gameObjects){
+                if (obj.DoSerialization()) {
+                    objsToSerialize.add(obj);
+                }
+            }
+
+            writer.write(gson.toJson(objsToSerialize));
             writer.close();
         } catch(IOException e) {
             e.printStackTrace();

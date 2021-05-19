@@ -1,7 +1,7 @@
 package components;
 
 
-import imgui.ImGui;
+import editor.JImGui;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import renderer.Texture;
@@ -32,11 +32,8 @@ public class SpriteRenderer extends Component {
 
     @Override
     public void imgui() {
-        float[] imColour = {colour.x, colour.y, colour.z, colour.w};
-        if (ImGui.colorPicker4("Colour Picker: ", imColour)) {
-            this.colour.set(imColour[0], imColour[1], imColour[2], imColour[3]);
-            this.isDirty = true;
-        }
+        Vector4f imColour = new Vector4f(colour.x, colour.y, colour.z, colour.w);
+        JImGui.colourPicker4("Colour Picker: ", imColour);
     }
 
     public Vector4f getColour() {
@@ -52,10 +49,8 @@ public class SpriteRenderer extends Component {
     }
 
     public void setColour(Vector4f colour) {
-        if (this.colour.equals(colour)) {
             this.isDirty = true;
-            this.colour.set(colour);
-        }
+            this.colour = colour;
     }
 
     public void setSprite(Sprite sprite) {
