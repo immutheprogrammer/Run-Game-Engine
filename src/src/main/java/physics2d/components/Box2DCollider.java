@@ -1,3 +1,4 @@
+/*
 package physics2d.components;
 
 import components.Component;
@@ -16,3 +17,4 @@ public class Box2DCollider extends Component {
         this.halfSize = halfSize;
     }
 }
+*/
